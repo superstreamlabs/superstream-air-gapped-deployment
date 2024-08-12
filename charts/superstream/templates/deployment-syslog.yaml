@@ -1,0 +1,61 @@
+# templates/deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  {{ include "superstream.fullname" . }}-syslog
+  labels:
+    {{- include "superstream.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.syslog.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "superstream.selectorLabels" . | nindent 6 }}-syslog
+  template:
+    metadata:
+      {{- with .Values.syslog.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "telegraf.labels" . | nindent 8 }}
+        {{- include "superstream.selectorLabels" . | nindent 8 }}-syslog
+    spec:
+      {{- with .Values.global.image.pullSecretNames }}
+      imagePullSecrets:
+      {{- range . }}
+      - name: {{ . | quote }}
+      {{- end }}
+      {{- end }}    
+      securityContext:
+        fsGroup: 911
+      containers:
+      - name: syslog-ng
+        {{ include "superstream.image" (merge (pick $.Values "global") .Values.syslog.image) | nindent 8 }}
+        ports:
+          - name: syslog
+            containerPort: {{ .Values.syslog.service.port }}
+            protocol: {{ .Values.syslog.service.protocol }}
+        command: ["/usr/sbin/syslog-ng", "-F", "-f", "/tmp/syslog-ng.conf", "--persist-file", "/config/syslog-ng.persist", "--pidfile=/config/syslog-ng.pid", "--control=/config/syslog-ng.ctl", "--stderr", "--no-caps"]
+        volumeMounts:
+        - name: config-volume
+          mountPath: {{ .Values.syslog.configMap.mountPath }}
+          subPath: {{ .Values.syslog.configMap.subPath }}
+        resources:
+            {{- toYaml .Values.syslog.resources | nindent 12 }} 
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ .Values.syslog.configMap.name }}
+      {{- with .Values.syslog.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.syslog.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.syslog.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
