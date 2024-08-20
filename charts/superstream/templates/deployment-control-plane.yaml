@@ -1,0 +1,136 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "superstream.fullname" . }}-control-plane
+  labels:
+    {{- include "superstream.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.superstreamControlPlane.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "superstream.selectorLabels" . | nindent 6 }}-control-plane
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      {{- with .Values.superstreamControlPlane.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "superstream.labels" . | nindent 8 }}
+        {{- include "superstream.selectorLabels" . | nindent 8 }}-control-plane
+    spec:
+      initContainers:
+      - name: check-nats-readiness
+        image: {{ .Values.superstreamControlPlane.initContainers.image }}
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: NATS_HOST
+            value: nats.{{ include "superstream.namespace" . }}     
+        command: 
+          - "sh"
+          - "-c"
+          - |
+            until nc -z $NATS_HOST.svc.cluster.local 4222 ; do
+              echo waiting for $NATS_HOST
+              sleep 2
+            done 
+      - name: check-postgresql-readiness
+        image: {{ .Values.superstreamControlPlane.initContainers.image }}
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: POSTGRESQL_HOST
+            value: postgresql-pgpool.{{ include "superstream.namespace" . }}    
+        command: 
+          - "sh"
+          - "-c"
+          - |
+            until nc -z $POSTGRESQL_HOST.svc.cluster.local 5432 ; do
+              echo waiting for $POSTGRESQL_HOST
+              sleep 2
+            done
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              {{- include "superstream.selectorLabels" . | nindent 14 }}-control-plane
+      containers:
+        - name: {{ .Chart.Name }}-data-plane
+          {{ include "superstream.image" (merge (pick $.Values "global") .Values.superstreamControlPlane.image) | nindent 10 }}
+          securityContext:
+            {{- toYaml .Values.superstreamEngine.securityContext | nindent 12 }}
+          ports:
+            - containerPort: 8888
+              name: http
+              protocol: TCP
+          env:
+            - name: ENV
+              value: production
+            - name: DB_USER
+              value: postgres
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: superstream-creds-control-plane
+                  key: password
+            - name: DB_DBNAME
+              value: superstream-database
+            - name: DB_HOST
+              value: postgresql-pgpool.{{ include "superstream.namespace" . }}.svc
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_MAX_CONNS
+              value: "100"
+            - name: PORT
+              value: "8888"
+            - name: ENCRYPTION_SECRET_KEY
+              value: vq1nG0BUJO4fdgdkN4734FzwtXddfhqH
+ #             valueFrom:
+ #               secretKeyRef:
+ #                 name: superstream-creds
+ #                 key: ENCRYPTION_SECRET_KEY
+            - name: NATS_HOST
+              value: nats.{{ include "superstream.namespace" . }}.svc
+            - name: NATS_PORT
+              value: "4222"
+            - name: JWT_SECRET_KEY
+              value: thisis32bitlongpassphraseimusing
+#              valueFrom:
+#                secretKeyRef:
+#                  name: superstream-creds
+#                  key: JWT_SECRET_KEY
+            - name: JWT_API_SECRET_KEY
+              value: MIbP3bJVUxDplu9UQqOTHpetdQaBzCBk
+#              valueFrom:
+#                secretKeyRef:
+#                  name: superstream-creds
+#                  key: JWT_API_SECRET_KEY
+          resources:
+            requests:
+              cpu: 50m
+              memory: 50Mi
+            limits:
+              cpu: 1
+              memory: 2Gi
+          securityContext: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      {{- with .Values.global.image.pullSecretNames }}
+      imagePullSecrets:
+      {{- range . }}
+      - name: {{ . | quote }}
+      {{- end }}
+      {{- end }}
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        {{- toYaml .Values.superstreamEngine.podSecurityContext | nindent 8 }}
+      serviceAccountName: {{ include "superstream.serviceAccountName" . }}
+      terminationGracePeriodSeconds: 30

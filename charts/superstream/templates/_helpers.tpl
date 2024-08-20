@@ -69,6 +69,20 @@ ACTIVATION_TOKEN: {{ .Values.global.superstreamActivationToken | toString | b64e
 {{- end -}}
 {{- end -}}
 
+{{- define "superstreamCP.secret" -}}
+{{- if not .Values.superstreamControlPlane.secret.useExisting -}}
+{{- $secret := lookup "v1" "Secret" .Release.Namespace .Values.superstreamControlPlane.secret.name -}}
+{{- if $secret -}}
+{{ toYaml $secret.data }}
+{{- else -}}
+postgres-password: {{ (randAlphaNum 10)  | b64enc | quote }}
+password: {{ (randAlphaNum 10)  | b64enc | quote }}
+repmgr-password: {{ (randAlphaNum 10 ) | b64enc | quote }}
+admin-password: {{ (randAlphaNum 10 ) | b64enc | quote }}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+
 {{/*
 Create the name of the service account to use
 */}}
