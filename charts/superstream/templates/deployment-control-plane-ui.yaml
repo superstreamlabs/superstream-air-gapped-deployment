@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "superstream.fullname" . }}-control-plane-ui
+  labels:
+    {{- include "superstream.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.superstreamControlPlane.userInterface.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "superstream.selectorLabels" . | nindent 6 }}-control-plane-ui
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      {{- with .Values.superstreamControlPlane.userInterface.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "superstream.labels" . | nindent 8 }}
+        {{- include "superstream.selectorLabels" . | nindent 8 }}-control-plane-ui
+    spec:
+      initContainers:
+      - name: check-nats-readiness                  # CHANGE TO CP READINESS
+        image: {{ .Values.superstreamControlPlane.initContainers.image }}
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NATS_HOST
+          value: nats.{{ include "superstream.namespace" . }}     
+        command: 
+        - "sh"
+        - "-c"
+        - |
+            until nc -z $NATS_HOST.svc.cluster.local 4222 ; do
+            echo waiting for $NATS_HOST
+            sleep 2
+            done 
+      nodeSelector: {}
+      containers:
+        - name: {{ .Chart.Name }}-control-plane-ui
+          {{ include "superstream.image" (merge (pick $.Values "global") .Values.superstreamControlPlane.userInterface.image) | nindent 10 }}
+          securityContext:
+            {{- toYaml .Values.superstreamEngine.securityContext | nindent 12 }}
+          ports:
+            - containerPort: {{ .Values.superstreamControlPlane.userInterface.service.port }}
+              name: ui
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              cpu: 500m
+              memory: 500Mi
+          securityContext: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      {{- with .Values.global.image.pullSecretNames }}
+      imagePullSecrets:
+      {{- range . }}
+      - name: {{ . | quote }}
+      {{- end }}
+      {{- end }}
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        {{- toYaml .Values.superstreamEngine.podSecurityContext | nindent 8 }}
+      serviceAccountName: {{ include "superstream.serviceAccountName" . }}
+      terminationGracePeriodSeconds: 30

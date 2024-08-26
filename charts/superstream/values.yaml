@@ -63,6 +63,32 @@ superstreamControlPlane:
     superstreamActivationToken: ""
     useExisting: false
 
+
+  # Superstream Control Plane UI config
+  userInterface:
+      # Number of replicas for the control plane UI deployment
+    replicaCount: 1
+    image:
+      # Docker image repository for the UI service
+      repository: superstreamlabs/superstream-control-plane-ui-test
+      # Policy for pulling the image
+      pullPolicy: Always
+      # Overrides the image tag whose default is the chart appVersion.
+      tag: "staging"
+      registry: 
+    imagePullSecrets: []
+
+
+    initContainers:
+      # Image used for readiness checks or setup tasks before the main containers start
+      image: curlimages/curl:8.6.0
+    service:
+      enabled: true
+      type: ClusterIP
+      port: 8080
+
+
+
 ############################################################
 # Superstream Engine config
 ############################################################

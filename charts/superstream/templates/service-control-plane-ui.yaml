@@ -1,0 +1,17 @@
+{{- if .Values.superstreamControlPlane.userInterface.service.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "superstream.fullname" . }}-control-plane-ui
+  labels:
+    {{- include "superstream.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.superstreamControlPlane.userInterface.service.type }}
+  ports:
+    - port: {{ .Values.superstreamControlPlane.userInterface.service.port }}
+      targetPort: ui
+      protocol: TCP
+      name: ui
+  selector:
+    {{- include "superstream.selectorLabels" . | nindent 4 }}-control-plane-ui
+{{- end }}
