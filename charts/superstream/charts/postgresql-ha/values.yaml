@@ -1697,7 +1697,7 @@ metrics:
   ## Bitnami PostgreSQL Prometheus exporter image
   ## @param metrics.enabled Enable PostgreSQL Prometheus exporter
   ##
-  enabled: false
+  enabled: true
   ## ref: https://hub.docker.com/r/bitnami/pgpool/tags/
   ## @param metrics.image.registry [default: REGISTRY_NAME] PostgreSQL Prometheus exporter image registry
   ## @param metrics.image.repository [default: REPOSITORY_NAME/postgres-exporter] PostgreSQL Prometheus exporter image repository
@@ -1831,7 +1831,7 @@ metrics:
   service:
     ## @param metrics.service.enabled PostgreSQL Prometheus exporter metrics service enabled
     ##
-    enabled: true
+    enabled: false
     ## @param metrics.service.type PostgreSQL Prometheus exporter metrics service type
     ##
     type: ClusterIP
