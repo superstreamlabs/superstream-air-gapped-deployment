@@ -105,6 +105,16 @@ data:
         accountId = "{{ .Values.global.superstreamAccountId }}"
         engineName = {{ .Values.global.engineName | quote }}
 
+    [[inputs.prometheus]]
+      kubernetes_label_selector = "app.kubernetes.io/component in (postgresql)"
+      monitor_kubernetes_pods = true
+      monitor_kubernetes_pods_method = "settings+annotations"
+      monitor_kubernetes_pods_namespace = {{ .Release.Namespace | quote}}
+      monitor_kubernetes_pods_port = 9187
+      [inputs.prometheus.tags]
+        accountId = "{{ .Values.global.superstreamAccountId }}"
+        engineName = {{ .Values.global.engineName | quote }}
+
     [[inputs.tail]]
       files = ["/tmp/telegraf.log"]
       from_beginning = false
