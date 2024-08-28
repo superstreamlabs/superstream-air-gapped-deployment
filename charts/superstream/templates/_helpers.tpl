@@ -55,6 +55,7 @@ Selector labels
 {{- define "superstream.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "superstream.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: superstream
 {{- end }}
 
 {{- define "superstream.secret" -}}
@@ -63,7 +64,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- if $secret -}}
 {{ toYaml $secret.data }}
 {{- else -}}
-ENCRYPTION_SECRET_KEY: {{ randAlphaNum 32 | b64enc | quote }}
+#ENCRYPTION_SECRET_KEY: {{ randAlphaNum 32 | b64enc | quote }}
 ACTIVATION_TOKEN: {{ .Values.global.superstreamActivationToken | toString | b64enc | quote }}
 {{- end -}}
 {{- end -}}
@@ -79,6 +80,10 @@ postgres-password: {{ (randAlphaNum 10)  | b64enc | quote }}
 password: {{ (randAlphaNum 10)  | b64enc | quote }}
 repmgr-password: {{ (randAlphaNum 10 ) | b64enc | quote }}
 admin-password: {{ (randAlphaNum 10 ) | b64enc | quote }}
+encryption-secret-key: {{ (randAlphaNum 32 ) | b64enc | quote }}
+jwt-secret-key: {{ (randAlphaNum 32 ) | b64enc | quote }}
+jwt-api-secret-key: {{ (randAlphaNum 32 ) | b64enc | quote }}
+
 {{- end -}}
 {{- end -}}
 {{- end -}}

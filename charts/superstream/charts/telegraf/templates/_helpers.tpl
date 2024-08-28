@@ -65,6 +65,7 @@ Selector labels
 {{- define "telegraf.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "telegraf.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: telegraf
 {{- end -}}
 
 

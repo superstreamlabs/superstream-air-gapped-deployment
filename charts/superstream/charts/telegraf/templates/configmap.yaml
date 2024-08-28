@@ -96,7 +96,7 @@ data:
         accountId = "{{ .Values.global.superstreamAccountId }}"
         engineName = {{ .Values.global.engineName | quote }}
     [[inputs.prometheus]]
-      kubernetes_label_selector = "app.kubernetes.io/name in (nats, superstream)"
+      kubernetes_label_selector = "app.kubernetes.io/component in (nats, superstream-data-plane)"
       monitor_kubernetes_pods = true
       monitor_kubernetes_pods_method = "settings+annotations"
       monitor_kubernetes_pods_namespace = {{ .Release.Namespace | quote}}

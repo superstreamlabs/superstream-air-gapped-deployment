@@ -90,27 +90,24 @@ spec:
             - name: PORT
               value: "8888"
             - name: ENCRYPTION_SECRET_KEY
-              value: vq1nG0BUJO4fdgdkN4734FzwtXddfhqH
- #             valueFrom:
- #               secretKeyRef:
- #                 name: superstream-creds
- #                 key: ENCRYPTION_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.superstreamControlPlane.secret.name }}
+                  key: encryption-secret-key
             - name: NATS_HOST
               value: nats.{{ include "superstream.namespace" . }}.svc
             - name: NATS_PORT
               value: "4222"
             - name: JWT_SECRET_KEY
-              value: thisis32bitlongpassphraseimusing
-#              valueFrom:
-#                secretKeyRef:
-#                  name: superstream-creds
-#                  key: JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.superstreamControlPlane.secret.name }}
+                    key: jwt-secret-key
             - name: JWT_API_SECRET_KEY
-              value: MIbP3bJVUxDplu9UQqOTHpetdQaBzCBk
-#              valueFrom:
-#                secretKeyRef:
-#                  name: superstream-creds
-#                  key: JWT_API_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.superstreamControlPlane.secret.name }}
+                key: jwt-api-secret-key
           resources:
             requests:
               cpu: 50m
