@@ -102,12 +102,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.superstreamControlPlane.secret.name }}
-                    key: jwt-secret-key
+                  key: jwt-secret-key
             - name: JWT_API_SECRET_KEY
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.superstreamControlPlane.secret.name }}
-                key: jwt-api-secret-key
+                  key: jwt-api-secret-key
           resources:
             requests:
               cpu: 50m
