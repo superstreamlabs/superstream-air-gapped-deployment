@@ -6,6 +6,7 @@ global:
   superstreamAccountId: "" # Provide the account ID associated with the deployment, which could be used for identifying resources or configurations tied to a specific account.
   superstreamActivationToken: "" # Enter the activation token required for services or resources that need an initial token for activation or authentication.
   skipLocalAuthentication: true
+  onPrem: true
   
   image:
     # global image pull policy to use for all container images in the chart
@@ -42,7 +43,7 @@ nats:
 ############################################################
 superstreamControlPlane:
   # Number of replicas for the control plane deployment
-  replicaCount: 1
+  replicaCount: 2
   image:
     # Docker image repository for the backend service
     repository: superstreamlabs/superstream-control-plane-be
@@ -61,7 +62,7 @@ superstreamControlPlane:
     name: superstream-creds-control-plane
     encryptionSecretKey: ""
     superstreamActivationToken: ""
-    useExisting: false
+    useExisting: true
 
 
   # Superstream Control Plane UI config
