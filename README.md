@@ -7,6 +7,20 @@ Reduce Costs and Boost Performance by 75% Without Changing a Single Component or
 
 </div>
 
+## Create secret with randomly generated passwords for the SSM
+```yaml
+kubectl create secret generic superstream-creds-control-plane \
+  --from-literal=postgres-password=$(openssl rand -base64 16) \
+  --from-literal=password=$(openssl rand -base64 16) \
+  --from-literal=repmgr-password=$(openssl rand -base64 16) \
+  --from-literal=admin-password=$(openssl rand -base64 16) \
+  --from-literal=superstream-admin-password=$(openssl rand -base64 16) \
+  --from-literal=encryption-secret-key=$(openssl rand -base64 32) \
+  --from-literal=jwt-secret-key=$(openssl rand -base64 32) \
+  --from-literal=jwt-api-secret-key=$(openssl rand -base64 32) \
+  -n superstream
+```
+
 ## Configure Environment Tokens
 
 For easiness, create `custom_values.yaml` file and edit the following values:
@@ -15,10 +29,12 @@ For easiness, create `custom_values.yaml` file and edit the following values:
 # GLOBAL configuration for Superstream Engine
 ############################################################
 global:
-  engineName: ""                   # Define the superstream engine name within 32 characters, excluding '.', and using only lowercase letters, numbers, '-', and '_'.
-  superstreamAccountId: ""         # Provide the account ID associated with the deployment, which could be used for identifying resources or configurations tied to a specific account.
-  superstreamActivationToken: ""   # Enter the activation token required for services or resources that need an initial token for activation or authentication.
+  engineName: ""                    # Define the superstream engine name within 32 characters, excluding '.', and using only lowercase letters, numbers, '-', and '_'.
+  superstreamAccountId: ""          # Provide the account ID associated with the deployment, which could be used for identifying resources or configurations tied to a specific account.
+  superstreamActivationToken: ""    # Enter the activation token required for services or resources that need an initial token for activation or authentication.
   skipLocalAuthentication: true
+  onPrem: true                      
+
 
 ############################################################
 # NATS config
