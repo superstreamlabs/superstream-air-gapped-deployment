@@ -89,6 +89,13 @@ spec:
               value: "100"
             - name: PORT
               value: "8888"
+            - name: ON_PREM
+              value: {{ .Values.global.onPrem }}
+            - name: SSM_ADMIN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.superstreamControlPlane.secret.name }}
+                  key: superstream-admin-password
             - name: ENCRYPTION_SECRET_KEY
               valueFrom:
                 secretKeyRef:
@@ -108,6 +115,14 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.superstreamControlPlane.secret.name }}
                   key: jwt-api-secret-key
+            - name: SYSLOG
+              value: {{ .Values.superstreamEngine.syslog.enabled | quote }}
+            - name: SYSLOG_HOST
+              value: {{ .Values.superstreamEngine.syslog.remoteSyslog }}.{{ include "superstream.namespace" . }}
+            - name: SYSLOG_PROTOCOL
+              value: {{ .Values.superstreamEngine.syslog.protocol }}
+            - name: SYSLOG_PORT
+              value: {{ .Values.superstreamEngine.syslog.port | quote }}
           resources:
             requests:
               cpu: 50m

@@ -67,6 +67,8 @@ spec:
               value: {{ .Values.nats.config.cluster.enabled | quote }}
             - name: SKIP_LOCAL_AUTHENTICATION
               value: {{ .Values.global.skipLocalAuthentication | quote }}
+            - name: ON_PREM
+              value: {{ .Values.global.onPrem }}
             - name: ACTIVATION_TOKEN
               valueFrom:
                 secretKeyRef:

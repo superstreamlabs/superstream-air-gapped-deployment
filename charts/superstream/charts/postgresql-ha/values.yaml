@@ -1171,7 +1171,7 @@ pgpool:
   customUsersSecret: ""
   ## @param pgpool.existingSecret Pgpool admin password using existing secret
   ##
-  existingSecret: ""
+  existingSecret: superstream-creds-control-plane
   ## @param pgpool.srCheckDatabase Name of the database to perform streaming replication checks
   ##
   srCheckDatabase: postgres

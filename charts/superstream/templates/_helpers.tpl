@@ -76,14 +76,14 @@ ACTIVATION_TOKEN: {{ .Values.global.superstreamActivationToken | toString | b64e
 {{- if $secret -}}
 {{ toYaml $secret.data }}
 {{- else -}}
-postgres-password: {{ (randAlphaNum 10)  | b64enc | quote }}
-password: {{ (randAlphaNum 10)  | b64enc | quote }}
-repmgr-password: {{ (randAlphaNum 10 ) | b64enc | quote }}
-admin-password: {{ (randAlphaNum 10 ) | b64enc | quote }}
+postgres-password: {{ (randAlphaNum 16)  | b64enc | quote }}
+password: {{ (randAlphaNum 16)  | b64enc | quote }}
+repmgr-password: {{ (randAlphaNum 16 ) | b64enc | quote }}
+admin-password: {{ (randAlphaNum 16 ) | b64enc | quote }}
+superstream-admin-password: {{ (randAlphaNum 16 ) | b64enc | quote }}
 encryption-secret-key: {{ (randAlphaNum 32 ) | b64enc | quote }}
 jwt-secret-key: {{ (randAlphaNum 32 ) | b64enc | quote }}
 jwt-api-secret-key: {{ (randAlphaNum 32 ) | b64enc | quote }}
-
 {{- end -}}
 {{- end -}}
 {{- end -}}
