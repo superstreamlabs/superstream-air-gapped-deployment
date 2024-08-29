@@ -68,7 +68,7 @@ spec:
             - name: SKIP_LOCAL_AUTHENTICATION
               value: {{ .Values.global.skipLocalAuthentication | quote }}
             - name: ON_PREM
-              value: {{ .Values.global.onPrem }}
+              value: {{ .Values.global.onPrem | quote }}
             - name: ACTIVATION_TOKEN
               valueFrom:
                 secretKeyRef:
