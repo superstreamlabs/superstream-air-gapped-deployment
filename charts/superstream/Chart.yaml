@@ -2,7 +2,7 @@ apiVersion: v2
 annotations:
   category: Streaming and Messaging
   licenses: Memphis Business Source License 1.0
-name: superstream-airgapped-deployment
+name: superstream-onprem
 description: Superstream Official Helm chart for Air-Gapped environments
 home: https://superstream.ai
 keywords:
