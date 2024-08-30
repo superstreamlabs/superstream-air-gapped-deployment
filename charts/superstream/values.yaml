@@ -71,11 +71,11 @@ superstreamControlPlane:
     replicaCount: 1
     image:
       # Docker image repository for the UI service
-      repository: superstreamlabs/superstream-control-plane-ui-test
+      repository: superstreamlabs/superstream-control-plane-onprem-ui
       # Policy for pulling the image
       pullPolicy: Always
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "staging"
+      tag: "1.0.402"
       registry: 
     imagePullSecrets: []
 
