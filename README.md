@@ -53,7 +53,7 @@ nats:
 
 To deploy it, run the following:
 ```bash
-helm repo add superstream https://k8s.superstream.ai/ --force-update && helm install superstream superstream/superstream -f custom_values.yaml --create-namespace --namespace superstream --wait
+helm repo add superstream-onprem https://k8s-onprem.superstream.ai/ --force-update && helm install superstream superstream-onprem/superstream-onprem -f custom_values.yaml --create-namespace --namespace superstream --wait
 ```
 
 ## Parameters
