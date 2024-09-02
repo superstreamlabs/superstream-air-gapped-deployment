@@ -90,7 +90,7 @@ superstreamControlPlane:
     service:
       enabled: true
       type: ClusterIP
-      port: 8080
+      port: 80
 
 
 
