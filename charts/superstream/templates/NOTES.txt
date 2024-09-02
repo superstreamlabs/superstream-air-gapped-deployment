@@ -27,8 +27,16 @@ https://docs.superstream.ai/getting-started/step-4-connect-your-clients
 Deployment Information
 -------------------------
 
+## Secrets ##
+UI      root username        - admin
+UI      root Password        - kubectl get secret {{ .Values.superstreamControlPlane.secret.name }} -n {{ .Release.Namespace }} -o jsonpath="{.data.superstream-admin-password}" | base64 --decode
+
 ## Pods Deployed ##
 2 - Superstream Data Plane
+2 - Superstream Control Plane
+1 - Superstream UI
+3 - PostgreSQL
+1 - PGPool
 1 - Telegraf
 1 - Superstream Syslog
 3 - NATS
