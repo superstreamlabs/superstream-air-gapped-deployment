@@ -25,20 +25,18 @@ spec:
         {{- include "superstream.selectorLabels" . | nindent 8 }}-data-plane
     spec:
       initContainers:
-      - name: check-nats-readiness
+      - name: check-control-plane-readiness
         image: {{ .Values.superstreamEngine.initContainers.image }}
         imagePullPolicy: IfNotPresent
         env:
-          - name: NATS_HOST
-            value: nats.{{ include "superstream.namespace" . }}  
-          - name: NATS_MONITORING_PORT
-            value: "8222"    
+          - name: CP_HOST
+            value: superstream-control-plane.{{ include "superstream.namespace" . }}  
         command: 
           - "sh"
           - "-c"
           - |
-            until nc -z $NATS_HOST.svc.cluster.local 4222 ; do
-              echo waiting for $NATS_HOST
+            until nc -z $CP_HOST.svc.cluster.local 8888 ; do
+              echo waiting for $CP_HOST
               sleep 2
             done 
 
