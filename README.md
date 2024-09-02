@@ -10,14 +10,14 @@ Reduce Costs and Boost Performance by 75% Without Changing a Single Component or
 ## Create secret with randomly generated passwords for the SSM
 ```yaml
 kubectl create secret generic superstream-creds-control-plane \
-  --from-literal=postgres-password=$(openssl rand -base64 16) \
-  --from-literal=password=$(openssl rand -base64 16) \
-  --from-literal=repmgr-password=$(openssl rand -base64 16) \
-  --from-literal=admin-password=$(openssl rand -base64 16) \
-  --from-literal=superstream-admin-password=$(openssl rand -base64 16) \
-  --from-literal=encryption-secret-key=$(openssl rand -base64 32) \
-  --from-literal=jwt-secret-key=$(openssl rand -base64 32) \
-  --from-literal=jwt-api-secret-key=$(openssl rand -base64 32) \
+  --from-literal=postgres-password=$(openssl rand -base64 16 | tr -dc 'a-zA-Z0-9') \
+  --from-literal=password=$(openssl rand -base64 16| tr -dc 'a-zA-Z0-9') \
+  --from-literal=repmgr-password=$(openssl rand -base64 16| tr -dc 'a-zA-Z0-9') \
+  --from-literal=admin-password=$(openssl rand -base64 16| tr -dc 'a-zA-Z0-9') \
+  --from-literal=superstream-admin-password=$(openssl rand -base64 16| tr -dc 'a-zA-Z0-9') \
+  --from-literal=encryption-secret-key=$(openssl rand -base64 32| tr -dc 'a-zA-Z0-9') \
+  --from-literal=jwt-secret-key=$(openssl rand -base64 32| tr -dc 'a-zA-Z0-9') \
+  --from-literal=jwt-api-secret-key=$(openssl rand -base64 32| tr -dc 'a-zA-Z0-9') \
   -n superstream
 ```
 
