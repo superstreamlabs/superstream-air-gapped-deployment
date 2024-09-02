@@ -78,7 +78,7 @@ data:
         "procid"
       ]
       [outputs.loki.http_headers]
-        Authorization = "5vG5afp5UJMiYe_DlnGdowsjduRplWB_7HyrwDWUNRApAdg26a1amtM82J6cePv46K9g4gisWc0wDwqXTxvb_A=="
+        Authorization = "$TOKEN"
     [[outputs.http]]
       data_format = "prometheusremotewrite"
       method = "POST"
@@ -88,8 +88,15 @@ data:
         "internal"
       ]
       url = "https://prometheus.mgmt.superstream.ai/api/v1/write"
+      {{- if .Values.env }}
+      {{- range .Values.env }}
+      {{- if and (eq .name "HTTPS_PROXY") (ne .value "") }}
+      http_proxy_url = "{{ .value }}"
+      {{- end }}
+      {{- end }}
+      {{- end }}      
       [outputs.http.headers]
-        Authorization = "5vG5afp5UJMiYe_DlnGdowsjduRplWB_7HyrwDWUNRApAdg26a1amtM82J6cePv46K9g4gisWc0wDwqXTxvb_A=="    
+        Authorization = "$TOKEN"  
     [[inputs.syslog]]
       server = "udp://:6514"
       [inputs.syslog.tags]

@@ -2,9 +2,9 @@
 # GLOBAL configuration for Superstream Engine
 ############################################################
 global:
-  engineName: "" # Define the superstream engine name within 32 characters, excluding '.', and using only lowercase letters, numbers, '-', and '_'.
-  superstreamAccountId: "" # Provide the account ID associated with the deployment, which could be used for identifying resources or configurations tied to a specific account.
-  superstreamActivationToken: "" # Enter the activation token required for services or resources that need an initial token for activation or authentication.
+  engineName: "airgapped" # Define the superstream engine name within 32 characters, excluding '.', and using only lowercase letters, numbers, '-', and '_'.
+  superstreamAccountId: "223671996" # Provide the account ID associated with the deployment, which could be used for identifying resources or configurations tied to a specific account.
+  superstreamActivationToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50X2luZm8iOnsiYWNjb3VudF9pZCI6IjIyMzY3MTk5NiIsImVtYWlsIjoiYmVrYUBtZW1waGlzLmRldiIsImp3dCI6ImV5SjBlWEFpT2lKS1YxUWlMQ0poYkdjaU9pSmxaREkxTlRFNUxXNXJaWGtpZlEuZXlKcWRHa2lPaUpJV2tGRVNGRkpVRVpZTjA5TlFWWlNTVmxFUzFwUFRVeE1TMFpQU0ZOWE5VZENWek0zVkVSVlEwbE5SVUZDUjBaR1dFSlJJaXdpYVdGMElqb3hOekV3TkRFMU9Ua3dMQ0pwYzNNaU9pSkJRMVpSUjBwSVZGVlJSRXcwUmpaQ1VETlVWVXRHTjB3MVVrbFVORlZLV2s1R1RsZElWVUpXUVVGUFZrTTNWRUZMU1ZSWU1sQlpNeUlzSW01aGJXVWlPaUl5TWpNMk56RTVPVFlpTENKemRXSWlPaUpWUTBRMlNWUTJSREpYV1VkV1VWQkhVbEJWVlVkVFRFZzNNazQwV0ZSVFVVUkJVRFZUVWtKR1VGbEhSVmhGVmpaVU16TlFOVlJCTnlJc0ltNWhkSE1pT25zaWNIVmlJanA3ZlN3aWMzVmlJanA3ZlN3aWMzVmljeUk2TFRFc0ltUmhkR0VpT2kweExDSndZWGxzYjJGa0lqb3RNU3dpZEhsd1pTSTZJblZ6WlhJaUxDSjJaWEp6YVc5dUlqb3lmWDAua1ZmMy1vb2V5dGVKSlZXdDFGWjhTUTBTYVVrZ3o1V25wdXRTSk1BaG5LNEV2NWhEUVhvY3Etd2VEdDY3dEk3V0xWNHoxVlRuVV91dUE3bTY2dUhhREEiLCJua2V5IjoiU1VBTk5YUTRJNktJWExWQkQ0WFQzS1hPM0dCQlA0WEczS1pST09KRVNYWE9GVU00N0VDWU1SNDZRWSIsIm9yZ2FuaXphdGlvbl9uYW1lIjoiYmVrYSJ9fQ.Ij-foKNzAKSQ4eRF98gFpF0mlNanjjDmjn_n94Bvhas" # Enter the activation token required for services or resources that need an initial token for activation or authentication.
   skipLocalAuthentication: true
   onPrem: true
   
@@ -247,3 +247,19 @@ syslog:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+
+############################################################
+# Superstream Telegraf config
+############################################################  
+## If your environment uses a proxy server, uncomment the lines below and replace the URL with your proxy server's address.
+# telegraf:
+#   env:
+#   - name: HTTPS_PROXY
+#     value: "http://your-proxy-server"
+#   - name: HOSTNAME
+#     value: "telegraf-polling-service"
+#   - name: TOKEN
+#     valueFrom:
+#       secretKeyRef:
+#         name: superstream-creds
+#         key: ACTIVATION_TOKEN 
