@@ -70,8 +70,8 @@ nats:
 If your environment requires the use of a proxy server to connect to external services, you need to add the HTTPS_PROXY variable to the Telegraf configuration. This ensures that Telegraf can route its traffic through the specified proxy.
 Additionally, ensure that your proxy server allows connectivity to the following endpoints:
 
-(*) Prometheus: https://prometheus.mgmt.superstream.ai
-(*) Loki: https://loki.mgmt.superstream.ai
+* **Prometheus:** https://prometheus.mgmt.superstream.ai
+* **Loki:** https://loki.mgmt.superstream.ai
 
 ## Deployment Instructions
 
