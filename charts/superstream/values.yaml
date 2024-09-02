@@ -25,7 +25,7 @@ global:
   labels: {}
 
 ############################################################
-# Superstream Telegraf config
+# Telegraf config
 ############################################################  
 ## If your environment uses a proxy server, uncomment the lines below and replace the URL with your proxy server's address.
 # telegraf:
