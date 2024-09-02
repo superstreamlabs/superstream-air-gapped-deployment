@@ -63,6 +63,10 @@ superstreamControlPlane:
     encryptionSecretKey: ""
     superstreamActivationToken: ""
     useExisting: true
+  service:
+      enabled: true
+      type: ClusterIP
+      port: 8888
 
 
   # Superstream Control Plane UI config
