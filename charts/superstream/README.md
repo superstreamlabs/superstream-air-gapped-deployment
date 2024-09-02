@@ -43,13 +43,6 @@ global:
 #   env:
 #   - name: HTTPS_PROXY
 #     value: "http://your-proxy-server"
-#   - name: HOSTNAME
-#     value: "telegraf-polling-service"
-#   - name: TOKEN
-#     valueFrom:
-#       secretKeyRef:
-#         name: superstream-creds
-#         key: ACTIVATION_TOKEN 
 
 ############################################################
 # NATS config
