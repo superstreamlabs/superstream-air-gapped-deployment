@@ -81,6 +81,7 @@ password: {{ (randAlphaNum 16)  | b64enc | quote }}
 repmgr-password: {{ (randAlphaNum 16 ) | b64enc | quote }}
 admin-password: {{ (randAlphaNum 16 ) | b64enc | quote }}
 superstream-admin-password: {{ (randAlphaNum 16 ) | b64enc | quote }}
+control-plane-token: {{ (randAlphaNum 32 ) | b64enc | quote }}
 encryption-secret-key: {{ (randAlphaNum 32 ) | b64enc | quote }}
 jwt-secret-key: {{ (randAlphaNum 32 ) | b64enc | quote }}
 jwt-api-secret-key: {{ (randAlphaNum 32 ) | b64enc | quote }}
