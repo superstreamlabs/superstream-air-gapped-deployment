@@ -88,8 +88,15 @@ data:
         "internal"
       ]
       url = "https://prometheus.mgmt.superstream.ai/api/v1/write"
+      {{- if .Values.env }}
+      {{- range .Values.env }}
+      {{- if and (eq .name "HTTPS_PROXY") (ne .value "") }}
+      http_proxy_url = "{{ .value }}"
+      {{- end }}
+      {{- end }}
+      {{- end }}      
       [outputs.http.headers]
-        Authorization = "$TOKEN"    
+        Authorization = "$TOKEN"  
     [[inputs.syslog]]
       server = "udp://:6514"
       [inputs.syslog.tags]

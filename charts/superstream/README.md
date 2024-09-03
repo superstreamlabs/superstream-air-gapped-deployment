@@ -36,6 +36,15 @@ global:
   onPrem: true                      
 
 ############################################################
+# Superstream Telegraf config
+############################################################  
+## If your environment uses a proxy server, uncomment the lines below and replace the URL with your proxy server's address.
+# telegraf:
+#   env:
+#   - name: HTTPS_PROXY
+#     value: "http://your-proxy-server"
+
+############################################################
 # NATS config
 ############################################################
 # NATS HA Deployment. Default "true"
@@ -49,6 +58,15 @@ nats:
         pvc:
           storageClassName: ""
 ```
+## Proxy Configuration
+
+If your environment requires the use of a proxy server to connect to external services, you need to add the HTTPS_PROXY variable to the Telegraf configuration. This ensures that Telegraf can route its traffic through the specified proxy.
+Additionally, ensure that your proxy server allows connectivity to the following endpoints:
+
+* **Prometheus:** https://prometheus.mgmt.superstream.ai
+* **Loki:** https://loki.mgmt.superstream.ai
+
+## Deployment Instructions
 
 To deploy it, run the following:
 ```bash

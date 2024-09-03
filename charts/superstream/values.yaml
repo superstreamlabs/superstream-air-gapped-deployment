@@ -23,6 +23,15 @@ global:
 
   # global labels will be applied to all resources deployed by the chart
   labels: {}
+
+############################################################
+# Telegraf config
+############################################################  
+## If your environment uses a proxy server, uncomment the lines below and replace the URL with your proxy server's address.
+# telegraf:
+#   env:
+#   - name: HTTPS_PROXY
+#     value: "http://your-proxy-server"
   
 ############################################################
 # NATS config
