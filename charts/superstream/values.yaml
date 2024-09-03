@@ -23,6 +23,9 @@ global:
 
   # global labels will be applied to all resources deployed by the chart
   labels: {}
+  proxy:
+    enabled: false
+    proxyUrl: "https://your-proxy-server"
 
 ############################################################
 # Telegraf config
