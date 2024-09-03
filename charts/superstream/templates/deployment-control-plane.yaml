@@ -105,6 +105,11 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.superstreamControlPlane.secret.name }}
                   key: encryption-secret-key
+            - name: CONTROL_PLANE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.superstreamControlPlane.secret.name }}
+                  key: control-plane-token
             - name: NATS_HOST
               value: nats.{{ include "superstream.namespace" . }}.svc
             - name: NATS_PORT
