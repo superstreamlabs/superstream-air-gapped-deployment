@@ -15,6 +15,7 @@ kubectl create secret generic superstream-creds-control-plane \
   --from-literal=repmgr-password=$(openssl rand -base64 16| tr -dc 'a-zA-Z0-9') \
   --from-literal=admin-password=$(openssl rand -base64 16| tr -dc 'a-zA-Z0-9') \
   --from-literal=superstream-admin-password=$(openssl rand -base64 16| tr -dc 'a-zA-Z0-9') \
+  --from-literal=control-plane-token=$(openssl rand -base64 48 | tr -dc 'a-zA-Z0-9' | head -c32) \
   --from-literal=encryption-secret-key=$(openssl rand -base64 48 | tr -dc 'a-zA-Z0-9' | head -c32) \
   --from-literal=jwt-secret-key=$(openssl rand -base64 48 | tr -dc 'a-zA-Z0-9' | head -c32) \
   --from-literal=jwt-api-secret-key=$(openssl rand -base64 48 | tr -dc 'a-zA-Z0-9' | head -c32) \
@@ -24,6 +25,7 @@ kubectl create secret generic superstream-creds-control-plane \
  - encryption-secret-key
  - jwt-secret-key
  - jwt-api-secret-key
+ - control-plane-token
 
 
 ## Configure Environment Tokens

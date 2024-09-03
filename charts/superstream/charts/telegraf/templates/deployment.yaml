@@ -63,7 +63,12 @@ spec:
           valueFrom:
             secretKeyRef:
               name: superstream-creds
-              key: ACTIVATION_TOKEN 
+              key: ACTIVATION_TOKEN
+        - name: CP_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.superstreamControlPlane.secret.name }}
+              key: control-plane-token 
 {{- if .Values.envFromSecret }}
         envFrom:
           - secretRef:
