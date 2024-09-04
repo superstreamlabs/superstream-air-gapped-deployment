@@ -68,7 +68,7 @@ Additionally, ensure that your proxy server allows connectivity to the following
 
 * **Prometheus:** https://prometheus.mgmt.superstream.ai
 * **Loki:** https://loki.mgmt.superstream.ai
-* **Stigg** httpsL//api.stigg.io
+* **Stigg** https://api.stigg.io
 
 ## Deployment Instructions
 
