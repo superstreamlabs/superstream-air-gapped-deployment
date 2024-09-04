@@ -6,6 +6,9 @@ global:
   superstreamAccountId: ""                 # Provide the account ID associated with the deployment, which could be used for identifying resources or configurations tied to a specific account.
   superstreamActivationToken: ""           # Enter the activation token required for services or resources that need an initial token for activation or authentication.
   skipLocalAuthentication: true
+  onPrem: true  
+
+  
 ############################################################
 # NATS config
 ############################################################

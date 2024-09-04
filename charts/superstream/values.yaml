@@ -21,20 +21,13 @@ global:
     # can be overridden by individual image registry
     registry:
 
-  # global labels will be applied to all resources deployed by the chart
+  # Global labels will be applied to all resources deployed by the chart
   labels: {}
+  ## If your environment uses a proxy server, uncomment the lines below and replace the URL with your proxy server's address.
   proxy:
     enabled: false
     proxyUrl: "https://your-proxy-server"
 
-############################################################
-# Telegraf config
-############################################################  
-## If your environment uses a proxy server, uncomment the lines below and replace the URL with your proxy server's address.
-# telegraf:
-#   env:
-#   - name: HTTPS_PROXY
-#     value: "http://your-proxy-server"
   
 ############################################################
 # NATS config

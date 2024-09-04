@@ -42,15 +42,11 @@ global:
   superstreamActivationToken: ""    # Enter the activation token required for services or resources that need an initial token for activation or authentication.
   skipLocalAuthentication: true
   onPrem: true                      
+  ## If your environment uses a proxy server, uncomment the lines below and replace the URL with your proxy server's address.
+  proxy:
+    enabled: false
+    proxyUrl: "https://your-proxy-server"
 
-############################################################
-# Superstream Telegraf config
-############################################################  
-## If your environment uses a proxy server, uncomment the lines below and replace the URL with your proxy server's address.
-# telegraf:
-#   env:
-#   - name: HTTPS_PROXY
-#     value: "http://your-proxy-server"
 
 ############################################################
 # NATS config
