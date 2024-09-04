@@ -90,8 +90,14 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `global.image.pullSecretNames`                            | Global list of secret names to use as image pull secrets for all pod specs in the chart. Secrets must exist in the same namespace. | `[]` |
 | `global.image.registry`                                   | Global registry to use for all container images in the chart. Can be overridden by individual image registry. | `""` |
 | `global.labels`                                   | Global labels to use for all container images in the chart. | `""` |
+| `global.onPrem`                                           | Specifies if the deployment is for an on-premises environment. | `true` |
 | `nats.config.cluster.enabled`                             | Indicates whether the NATS cluster is enabled.                                      | `true`                             |
 | `nats.config.jetstream.fileStore.pvc.storageClassName`    | Specifies the storage class name for the Jetstream file store PVC.                  | `""`                               |
+| `superstreamControlPlane.image.registry`                  |	Docker registry to use for pulling the control plane backend service images. | `""` |
+| `superstreamControlPlane.secret.useExisting`              |	Determines whether to use an existing secret for the control plane.	| `true` |
+| `superstreamControlPlane.service.port`                    |	Port for the control plane service.	| `8888` |
+| `superstreamControlPlane.userInterface.image.registry`    |	Docker registry to use for pulling the control plane UI service images.	| `""` |
+| `superstreamControlPlane.userInterface.service.port`      |	Port for the control plane UI service. | `80` |
 | `superstreamEngine.releaseDate`                           | Release date for the backend component.                                             | `"2024-02-22-13-03"`               |
 | `superstreamEngine.replicaCount`                          | Number of replicas for the backend deployment.                                      | `2`                                |
 | `superstreamEngine.image.repository`                      | Docker image repository for the backend service.                                    | `superstreamlabs/superstream-data-plane-be` |
@@ -154,7 +160,7 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `syslog.imagePullSecrets`                                 | Image pull secrets.                                                                 | `[]`                               |
 | `syslog.service.type`                                     | Type of service for syslog.                                                         | `ClusterIP`                        |
 | `syslog.service.port`                                     | Port for the syslog service.                                                        | `5514`                             |
-| `syslog.service.protocol`                                 | Protocol for the syslog service.                                                    | `UDP`                              |
+| `syslog.service.protocol`                                 | Protocol used by the syslog server.                                                    | `UDP`                              |
 | `syslog.resources.limits.cpu`                             | CPU limit for the syslog pod.                                                       | `"100m"`                           |
 | `syslog.resources.limits.memory`                          | Memory limit for the syslog pod.                                                    | `"256Mi"`                          |
 | `syslog.resources.requests.cpu`                           | CPU request for the syslog pod.                                                     | `"50m"`                            |
@@ -165,7 +171,7 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `syslog.remoteSyslog.protocol`                            | Protocol (e.g., UDP) for the remote syslog.                                         | `udp`                              |
 | `syslog.configMap.enabled`                                | Enable ConfigMap for syslog.                                                        | `true`                             |
 | `syslog.configMap.name`                                   | Name of the ConfigMap for syslog.                                                   | `syslog-config`                    |
-| `syslog.configMap.mountPath`                              | Mount path for the syslog ConfigMap.                                                | `/config/syslog-ng.conf`           |
+| `syslog.configMap.mountPath`                              | Mount path for the syslog ConfigMap.                                                | `/tmp/syslog-ng.conf`           |
 | `syslog.configMap.subPath`                                | Specific file to mount from the ConfigMap.                                          | `syslog-ng.conf`                   |
 | `syslog.persistence.enabled`                              | Enable persistence for syslog.                                                      | `false`                            |
 | `syslog.persistence.size`                                 | Size of the persistent volume for syslog.                                           | `"1Gi"`                            |

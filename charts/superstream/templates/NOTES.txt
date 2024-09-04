@@ -31,6 +31,12 @@ Deployment Information
 UI      root username        - admin
 UI      root Password        - kubectl get secret {{ .Values.superstreamControlPlane.secret.name }} -n {{ .Release.Namespace }} -o jsonpath="{.data.superstream-admin-password}" | base64 --decode
 
+## Next Steps ##
+1. Expose the Superstream Control Plane service. It is a hard requirement to use "superstream-api" at the beginning of the configured FQDN.
+   Example: "superstream-api.example.com"
+2. Expose the Superstream Control Plane UI service.
+3. Log in to the Superstream UI and connect your first Kafka cluster.
+
 ## Pods Deployed ##
 2 - Superstream Data Plane
 2 - Superstream Control Plane
