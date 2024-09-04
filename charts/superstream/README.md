@@ -8,7 +8,7 @@ Reduce Costs and Boost Performance by 75% Without Changing a Single Component or
 </div>
 
 ## Create secret with randomly generated passwords for the SSM
-## The secret name cant be changed, will be fixed in coming release.
+### The secret name cant be changed, will be fixed in coming release.
 ```yaml
 kubectl create secret generic superstream-creds-control-plane \
   --from-literal=postgres-password=$(openssl rand -base64 16 | tr -dc 'a-zA-Z0-9') \

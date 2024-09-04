@@ -8,6 +8,7 @@ Reduce Costs and Boost Performance by 75% Without Changing a Single Component or
 </div>
 
 ## Create secret with randomly generated passwords for the SSM
+### The secret name cant be changed, will be fixed in coming release.
 ```yaml
 kubectl create secret generic superstream-creds-control-plane \
   --from-literal=postgres-password=$(openssl rand -base64 16 | tr -dc 'a-zA-Z0-9') \
@@ -45,14 +46,6 @@ global:
     enabled: false
     proxyUrl: "https://your-proxy-server"
 
-############################################################
-# Telegraf config
-############################################################  
-## If your environment uses a proxy server, uncomment the lines below and replace the URL with your proxy server's address.
-# telegraf:
-#   env:
-#   - name: HTTPS_PROXY
-#     value: "http://your-proxy-server"
 
 ############################################################
 # NATS config
