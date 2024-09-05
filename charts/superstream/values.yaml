@@ -16,13 +16,17 @@ global:
     # secrets must exist in the same namespace
     # https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     pullSecretNames:
-      - regcred
     # global registry to use for all container images in the chart
     # can be overridden by individual image registry
     registry:
 
-  # global labels will be applied to all resources deployed by the chart
+  # Global labels will be applied to all resources deployed by the chart
   labels: {}
+  ## If your environment uses a proxy server, uncomment the lines below and replace the URL with your proxy server's address.
+  proxy:
+    enabled: false
+    proxyUrl: "https://your-proxy-server"
+
   
 ############################################################
 # NATS config
@@ -50,7 +54,7 @@ superstreamControlPlane:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "1.0.301"
+    tag: "1.0.402"
     registry: 
   imagePullSecrets: []
 
@@ -63,6 +67,10 @@ superstreamControlPlane:
     encryptionSecretKey: ""
     superstreamActivationToken: ""
     useExisting: true
+  service:
+      enabled: true
+      type: ClusterIP
+      port: 8888
 
 
   # Superstream Control Plane UI config
@@ -75,7 +83,7 @@ superstreamControlPlane:
       # Policy for pulling the image
       pullPolicy: Always
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "1.0.402"
+      tag: "1.0.403"
       registry: 
     imagePullSecrets: []
 
@@ -86,7 +94,7 @@ superstreamControlPlane:
     service:
       enabled: true
       type: ClusterIP
-      port: 8080
+      port: 80
 
 
 
@@ -103,7 +111,7 @@ superstreamEngine:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "latest"
+    tag: "1.0.401"
     registry: 
   imagePullSecrets: []
   # Overrides for Helm's default naming conventions
@@ -201,7 +209,7 @@ superstreamEngine:
     host: ""
     port: 4222
   controlPlane:
-    host: "broker.superstream.ai"
+    host: ""
     port: 4222
   syslog:
     enabled: true

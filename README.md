@@ -6,24 +6,33 @@
 Reduce Costs and Boost Performance by 75% Without Changing a Single Component or Your Existing Kafka!</b>
 
 </div>
+This guide provides instructions for deploying the Superstream All-In-One distribution.
 
-## Create secret with randomly generated passwords for the SSM
+## Create Secrets with Randomly Generated Passwords for SSM
+### The secret name `superstream-creds-control-plane` cannot be changed in the current release. This will be fixed in an upcoming release.
+To create a secret for the Superstream with randomly generated passwords, run the following command:
 ```yaml
 kubectl create secret generic superstream-creds-control-plane \
-  --from-literal=postgres-password=$(openssl rand -base64 16) \
-  --from-literal=password=$(openssl rand -base64 16) \
-  --from-literal=repmgr-password=$(openssl rand -base64 16) \
-  --from-literal=admin-password=$(openssl rand -base64 16) \
-  --from-literal=superstream-admin-password=$(openssl rand -base64 16) \
-  --from-literal=encryption-secret-key=$(openssl rand -base64 32) \
-  --from-literal=jwt-secret-key=$(openssl rand -base64 32) \
-  --from-literal=jwt-api-secret-key=$(openssl rand -base64 32) \
+  --from-literal=postgres-password=$(openssl rand -base64 16 | tr -dc 'a-zA-Z0-9') \
+  --from-literal=password=$(openssl rand -base64 16| tr -dc 'a-zA-Z0-9') \
+  --from-literal=repmgr-password=$(openssl rand -base64 16| tr -dc 'a-zA-Z0-9') \
+  --from-literal=admin-password=$(openssl rand -base64 16| tr -dc 'a-zA-Z0-9') \
+  --from-literal=superstream-admin-password=$(openssl rand -base64 16| tr -dc 'a-zA-Z0-9') \
+  --from-literal=control-plane-token=$(openssl rand -base64 48 | tr -dc 'a-zA-Z0-9' | head -c32) \
+  --from-literal=encryption-secret-key=$(openssl rand -base64 48 | tr -dc 'a-zA-Z0-9' | head -c32) \
+  --from-literal=jwt-secret-key=$(openssl rand -base64 48 | tr -dc 'a-zA-Z0-9' | head -c32) \
+  --from-literal=jwt-api-secret-key=$(openssl rand -base64 48 | tr -dc 'a-zA-Z0-9' | head -c32) \
   -n superstream
 ```
+### Note: The following keys should have a length of 32 characters:
+ - encryption-secret-key
+ - jwt-secret-key
+ - jwt-api-secret-key
+ - control-plane-token
 
 ## Configure Environment Tokens
 
-For easiness, create `custom_values.yaml` file and edit the following values:
+For a more straightforward configuration, create a `custom_values.yaml` file and edit the following values:
 ```yaml
 ############################################################
 # GLOBAL configuration for Superstream Engine
@@ -33,7 +42,11 @@ global:
   superstreamAccountId: ""          # Provide the account ID associated with the deployment, which could be used for identifying resources or configurations tied to a specific account.
   superstreamActivationToken: ""    # Enter the activation token required for services or resources that need an initial token for activation or authentication.
   skipLocalAuthentication: true
-  onPrem: true                      
+  onPrem: true  
+  ## If your environment uses a proxy server, uncomment the lines below and replace the URL with your proxy server's address.
+  proxy:
+    enabled: false
+    proxyUrl: "https://your-proxy-server"
 
 
 ############################################################
@@ -50,10 +63,19 @@ nats:
         pvc:
           storageClassName: ""
 ```
+## Proxy Configuration
+If your environment requires a proxy server to connect to external services, set the global.proxy.enabled variable to true and provide the global.proxy.proxyUrl in the custom_values.yaml file. This configuration ensures that all critical services route traffic through the specified proxy. 
+Additionally, make sure your proxy server permits connectivity to the following endpoints:
 
-To deploy it, run the following:
+* **Prometheus:** https://prometheus.mgmt.superstream.ai
+* **Loki:** https://loki.mgmt.superstream.ai
+* **Stigg** https://api.stigg.io
+
+## Deployment Instructions
+
+To deploy the Superstream, run the following command:
 ```bash
-helm repo add superstream https://k8s.superstream.ai/ --force-update && helm install superstream superstream/superstream -f custom_values.yaml --create-namespace --namespace superstream --wait
+helm repo add superstream-onprem https://k8s-onprem.superstream.ai/ --force-update && helm install superstream superstream-onprem/superstream-onprem -f custom_values.yaml --create-namespace --namespace superstream --wait
 ```
 
 ## Parameters
@@ -69,8 +91,14 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `global.image.pullSecretNames`                            | Global list of secret names to use as image pull secrets for all pod specs in the chart. Secrets must exist in the same namespace. | `[]` |
 | `global.image.registry`                                   | Global registry to use for all container images in the chart. Can be overridden by individual image registry. | `""` |
 | `global.labels`                                   | Global labels to use for all container images in the chart. | `""` |
+| `global.onPrem`                                           | Specifies if the deployment is for an on-premises environment. | `true` |
 | `nats.config.cluster.enabled`                             | Indicates whether the NATS cluster is enabled.                                      | `true`                             |
 | `nats.config.jetstream.fileStore.pvc.storageClassName`    | Specifies the storage class name for the Jetstream file store PVC.                  | `""`                               |
+| `superstreamControlPlane.image.registry`                  |	Docker registry to use for pulling the control plane backend service images. | `""` |
+| `superstreamControlPlane.secret.useExisting`              |	Determines whether to use an existing secret for the control plane.	| `true` |
+| `superstreamControlPlane.service.port`                    |	Port for the control plane service.	| `8888` |
+| `superstreamControlPlane.userInterface.image.registry`    |	Docker registry to use for pulling the control plane UI service images.	| `""` |
+| `superstreamControlPlane.userInterface.service.port`      |	Port for the control plane UI service. | `80` |
 | `superstreamEngine.releaseDate`                           | Release date for the backend component.                                             | `"2024-02-22-13-03"`               |
 | `superstreamEngine.replicaCount`                          | Number of replicas for the backend deployment.                                      | `2`                                |
 | `superstreamEngine.image.repository`                      | Docker image repository for the backend service.                                    | `superstreamlabs/superstream-data-plane-be` |
@@ -133,7 +161,7 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `syslog.imagePullSecrets`                                 | Image pull secrets.                                                                 | `[]`                               |
 | `syslog.service.type`                                     | Type of service for syslog.                                                         | `ClusterIP`                        |
 | `syslog.service.port`                                     | Port for the syslog service.                                                        | `5514`                             |
-| `syslog.service.protocol`                                 | Protocol for the syslog service.                                                    | `UDP`                              |
+| `syslog.service.protocol`                                 | Protocol used by the syslog server.                                                    | `UDP`                              |
 | `syslog.resources.limits.cpu`                             | CPU limit for the syslog pod.                                                       | `"100m"`                           |
 | `syslog.resources.limits.memory`                          | Memory limit for the syslog pod.                                                    | `"256Mi"`                          |
 | `syslog.resources.requests.cpu`                           | CPU request for the syslog pod.                                                     | `"50m"`                            |
@@ -144,7 +172,7 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `syslog.remoteSyslog.protocol`                            | Protocol (e.g., UDP) for the remote syslog.                                         | `udp`                              |
 | `syslog.configMap.enabled`                                | Enable ConfigMap for syslog.                                                        | `true`                             |
 | `syslog.configMap.name`                                   | Name of the ConfigMap for syslog.                                                   | `syslog-config`                    |
-| `syslog.configMap.mountPath`                              | Mount path for the syslog ConfigMap.                                                | `/config/syslog-ng.conf`           |
+| `syslog.configMap.mountPath`                              | Mount path for the syslog ConfigMap.                                                | `/tmp/syslog-ng.conf`           |
 | `syslog.configMap.subPath`                                | Specific file to mount from the ConfigMap.                                          | `syslog-ng.conf`                   |
 | `syslog.persistence.enabled`                              | Enable persistence for syslog.                                                      | `false`                            |
 | `syslog.persistence.size`                                 | Size of the persistent volume for syslog.                                           | `"1Gi"`                            |

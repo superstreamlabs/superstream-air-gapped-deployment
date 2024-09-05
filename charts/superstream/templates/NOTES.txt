@@ -27,8 +27,26 @@ https://docs.superstream.ai/getting-started/step-4-connect-your-clients
 Deployment Information
 -------------------------
 
+## Secrets ##
+UI      root Username        - admin
+UI      root Password        - kubectl get secret {{ .Values.superstreamControlPlane.secret.name }} -n {{ .Release.Namespace }} -o jsonpath="{.data.superstream-admin-password}" | base64 --decode
+
+## Requirements ##
+To be able to use the Superstream User Interface the following two FQDN records should be exposed under the same domain. 
+
+## Next Steps ##
+1. Expose the Superstream Control Plane service. It is a hard requirement to use "superstream-api" at the beginning of the configured FQDN.
+   Example: "superstream-api.example.com"
+2. Expose the Superstream Control Plane UI service.
+   Example: "superstream-app.example.com"
+3. Log in to the Superstream UI and connect your first Kafka cluster.
+
 ## Pods Deployed ##
 2 - Superstream Data Plane
+2 - Superstream Control Plane
+1 - Superstream UI
+3 - PostgreSQL
+1 - PGPool
 1 - Telegraf
 1 - Superstream Syslog
 3 - NATS
