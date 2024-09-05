@@ -1,17 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: {{ include "superstream.fullname" . }}-control-plane
   labels:
-    app.kubernetes.io/instance: superstream-control-plane
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: superstream-control-plane
-    argocd.argoproj.io/instance: superstream-control-plane
-  name: superstream-control-plane
+    {{- include "superstream.labels" . | nindent 4 }}
 spec:
+  type: {{ .Values.superstreamControlPlane.service.type }}
   ports:
-  - port: 8888
+  - port: {{ .Values.superstreamControlPlane.service.port }}
     protocol: TCP
-    targetPort: 8888
+    targetPort: http
   selector:
-    app.kubernetes.io/instance: superstream-control-plane
-    app.kubernetes.io/name: superstream-control-plane
+    {{- include "superstream.selectorLabels" . | nindent 4 }}-control-plane

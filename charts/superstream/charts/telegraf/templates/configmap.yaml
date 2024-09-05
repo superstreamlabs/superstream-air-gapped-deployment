@@ -88,8 +88,11 @@ data:
         "internal"
       ]
       url = "https://prometheus.mgmt.superstream.ai/api/v1/write"
+      {{- if .Values.global.proxy.enabled }}
+      http_proxy_url = "{{ .Values.global.proxy.proxyUrl }}"
+      {{- end }}      
       [outputs.http.headers]
-        Authorization = "$TOKEN"    
+        Authorization = "$TOKEN"  
     [[inputs.syslog]]
       server = "udp://:6514"
       [inputs.syslog.tags]
@@ -111,6 +114,18 @@ data:
       monitor_kubernetes_pods_method = "settings+annotations"
       monitor_kubernetes_pods_namespace = {{ .Release.Namespace | quote}}
       monitor_kubernetes_pods_port = 9187
+      [inputs.prometheus.tags]
+        accountId = "{{ .Values.global.superstreamAccountId }}"
+        engineName = {{ .Values.global.engineName | quote }}
+
+    [[inputs.prometheus]]
+      kubernetes_label_selector = "app.kubernetes.io/component in (superstream-control-plane)"
+      monitor_kubernetes_pods = true
+      monitor_kubernetes_pods_method = "settings+annotations"
+      monitor_kubernetes_pods_namespace = {{ .Release.Namespace | quote}}
+      monitor_kubernetes_pods_port = 8888
+      monitor_kubernetes_pods_path = "/monitoring/metrics"
+      bearer_token_string = "$CP_TOKEN"
       [inputs.prometheus.tags]
         accountId = "{{ .Values.global.superstreamAccountId }}"
         engineName = {{ .Values.global.engineName | quote }}

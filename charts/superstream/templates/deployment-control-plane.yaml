@@ -91,6 +91,10 @@ spec:
               value: "8888"
             - name: ON_PREM
               value: {{ .Values.global.onPrem | quote }}
+            {{- if .Values.global.proxy.enabled }}
+            - name: HTTPS_PROXY
+              value: {{ .Values.global.proxy.proxyUrl }}
+            {{- end }} 
             - name: SSM_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -101,6 +105,11 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.superstreamControlPlane.secret.name }}
                   key: encryption-secret-key
+            - name: CONTROL_PLANE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.superstreamControlPlane.secret.name }}
+                  key: control-plane-token
             - name: NATS_HOST
               value: nats.{{ include "superstream.namespace" . }}.svc
             - name: NATS_PORT

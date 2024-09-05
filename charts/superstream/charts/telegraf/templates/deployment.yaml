@@ -50,7 +50,25 @@ spec:
 {{ toYaml .Values.args | indent 8 }}
         {{- end }}
         env:
+        {{- if .Values.env }}
 {{ toYaml .Values.env | indent 8 }}
+        {{- end }}
+        {{- if .Values.global.proxy.enabled }}
+        - name: HTTPS_PROXY
+          value: {{ .Values.global.proxy.proxyUrl }}
+        {{- end }}  
+        - name: HOSTNAME
+          value: "telegraf-polling-service"
+        - name: TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: superstream-creds
+              key: ACTIVATION_TOKEN
+        - name: CP_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: superstream-creds-control-plane
+              key: control-plane-token 
 {{- if .Values.envFromSecret }}
         envFrom:
           - secretRef:
