@@ -16,7 +16,6 @@ global:
     # secrets must exist in the same namespace
     # https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     pullSecretNames:
-      - regcred
     # global registry to use for all container images in the chart
     # can be overridden by individual image registry
     registry:
@@ -55,7 +54,7 @@ superstreamControlPlane:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "1.0.301"
+    tag: "1.0.402"
     registry: 
   imagePullSecrets: []
 
@@ -84,7 +83,7 @@ superstreamControlPlane:
       # Policy for pulling the image
       pullPolicy: Always
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "1.0.402"
+      tag: "1.0.403"
       registry: 
     imagePullSecrets: []
 
@@ -112,7 +111,7 @@ superstreamEngine:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "latest"
+    tag: "1.0.401"
     registry: 
   imagePullSecrets: []
   # Overrides for Helm's default naming conventions
