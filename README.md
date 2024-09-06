@@ -75,7 +75,7 @@ Additionally, make sure your proxy server permits connectivity to the following 
 
 To deploy the Superstream, run the following command:
 ```bash
-helm repo add superstream-onprem https://k8s-onprem.superstream.ai/ --force-update && helm install superstream superstream-onprem/superstream-onprem -f custom_values.yaml --create-namespace --namespace superstream --wait
+helm repo add superstream-onprem https://k8s-onprem.superstream.ai/ --force-update && helm upgrade --install superstream superstream-onprem/superstream-onprem -f custom_values.yaml --create-namespace --namespace superstream --wait
 ```
 
 ## Parameters
