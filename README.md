@@ -62,6 +62,14 @@ nats:
       fileStore:
         pvc:
           storageClassName: ""
+############################################################
+# Telegraf config
+############################################################
+# Telegraf custom environment variables configuration.
+# telegraf:
+#   env:
+#   - name: NO_PROXY
+#     value: "10.0.0.0/8,8.8.8.8"
 ```
 ## Proxy Configuration
 If your environment requires a proxy server to connect to external services, set the global.proxy.enabled variable to true and provide the global.proxy.proxyUrl in the custom_values.yaml file. This configuration ensures that all critical services route traffic through the specified proxy. 
