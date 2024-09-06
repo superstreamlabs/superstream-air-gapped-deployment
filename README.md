@@ -86,6 +86,14 @@ To deploy the Superstream, run the following command:
 helm repo add superstream-onprem https://k8s-onprem.superstream.ai/ --force-update && helm upgrade --install superstream superstream-onprem/superstream-onprem -f custom_values.yaml --create-namespace --namespace superstream --wait
 ```
 
+## Configure valid FQDN records
+To use the Superstream User Interface, the following two FQDN records should be exposed under the same domain.
+ - Expose the Superstream Control Plane service. Using superstream-api at the beginning of the configured FQDN is a hard requirement. 
+  Example: "superstream-api.example.com"
+ - Expose the Superstream Control Plane UI service. 
+  Example: superstream-app.example.com
+ - Log in to the Superstream UI and connect your first Kafka cluster.
+
 ## Parameters
 The following table lists the configurable parameters of the SuperStream chart and their default values:
 
