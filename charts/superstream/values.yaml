@@ -7,7 +7,6 @@ global:
   superstreamActivationToken: "" # Enter the activation token required for services or resources that need an initial token for activation or authentication.
   skipLocalAuthentication: true
   onPrem: true
-  
   image:
     # global image pull policy to use for all container images in the chart
     # can be overridden by individual image pullPolicy
@@ -19,15 +18,12 @@ global:
     # global registry to use for all container images in the chart
     # can be overridden by individual image registry
     registry:
-
   # Global labels will be applied to all resources deployed by the chart
   labels: {}
   ## If your environment uses a proxy server, uncomment the lines below and replace the URL with your proxy server's address.
   proxy:
     enabled: false
     proxyUrl: "https://your-proxy-server"
-
-  
 ############################################################
 # NATS config
 ############################################################
@@ -41,7 +37,6 @@ nats:
       fileStore:
         pvc:
           storageClassName: ""
-
 ############################################################
 # Superstream Control Plane config
 ############################################################
@@ -55,10 +50,8 @@ superstreamControlPlane:
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: "1.0.405"
-    registry: 
+    registry:
   imagePullSecrets: []
-
-
   initContainers:
     # Image used for readiness checks or setup tasks before the main containers start
     image: curlimages/curl:8.6.0
@@ -68,14 +61,12 @@ superstreamControlPlane:
     superstreamActivationToken: ""
     useExisting: true
   service:
-      enabled: true
-      type: ClusterIP
-      port: 8888
-
-
+    enabled: true
+    type: ClusterIP
+    port: 8888
   # Superstream Control Plane UI config
   userInterface:
-      # Number of replicas for the control plane UI deployment
+    # Number of replicas for the control plane UI deployment
     replicaCount: 1
     image:
       # Docker image repository for the UI service
@@ -83,11 +74,9 @@ superstreamControlPlane:
       # Policy for pulling the image
       pullPolicy: Always
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "1.0.407"
-      registry: 
+      tag: "1.0.408"
+      registry:
     imagePullSecrets: []
-
-
     initContainers:
       # Image used for readiness checks or setup tasks before the main containers start
       image: curlimages/curl:8.6.0
@@ -95,9 +84,6 @@ superstreamControlPlane:
       enabled: true
       type: ClusterIP
       port: 80
-
-
-
 ############################################################
 # Superstream Engine config
 ############################################################
@@ -112,7 +98,7 @@ superstreamEngine:
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: "1.0.403"
-    registry: 
+    registry:
   imagePullSecrets: []
   # Overrides for Helm's default naming conventions
   nameOverride: ""
@@ -216,14 +202,13 @@ superstreamEngine:
     remoteSyslog: superstream-syslog
     port: 5514
     protocol: udp
-
 syslog:
   replicaCount: 1
   image:
     repository: linuxserver/syslog-ng
     pullPolicy: IfNotPresent
     tag: "4.7.1" # Use a specific version to ensure consistency across deployments
-    registry: 
+    registry:
   imagePullSecrets: []
   service:
     type: ClusterIP
