@@ -49,7 +49,7 @@ superstreamControlPlane:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "1.0.407"
+    tag: "1.0.503"
     registry:
   imagePullSecrets: []
   initContainers:
@@ -74,7 +74,7 @@ superstreamControlPlane:
       # Policy for pulling the image
       pullPolicy: Always
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "1.0.410"
+      tag: "1.0.504"
       registry:
     imagePullSecrets: []
     initContainers:
@@ -97,7 +97,7 @@ superstreamEngine:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "1.0.404"
+    tag: "1.0.500"
     registry:
   imagePullSecrets: []
   # Overrides for Helm's default naming conventions
