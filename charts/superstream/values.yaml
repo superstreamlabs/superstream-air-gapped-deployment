@@ -222,7 +222,7 @@ superstreamEngine:
         memory: 2Gi
       requests:
         cpu: '500m'
-        memory: 500m    
+        memory: 5006Mi    
 
 syslog:
   replicaCount: 1
