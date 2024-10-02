@@ -26,3 +26,11 @@ nats:
       fileStore:
         pvc:
           storageClassName: ""
+############################################################
+# Postgresql config
+############################################################
+postgresql-ha:
+# Postgresql storageClass configuration. The default is blank "".
+  persistence:
+    enable: true    
+    storageClass: ""          
