@@ -67,6 +67,10 @@ spec:
               value: {{ .Values.global.skipLocalAuthentication | quote }}
             - name: ON_PREM
               value: {{ .Values.global.onPrem | quote }}
+            {{- if .Values.global.proxy.enabled }}
+            - name: HTTPS_PROXY
+              value: {{ .Values.global.proxy.proxyUrl }}
+            {{- end }}               
             - name: ACTIVATION_TOKEN
               valueFrom:
                 secretKeyRef:
