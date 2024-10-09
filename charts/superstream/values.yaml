@@ -38,6 +38,14 @@ nats:
         pvc:
           storageClassName: ""
 ############################################################
+# Postgresql config
+############################################################
+postgresql-ha:
+  # Postgresql storageClass configuration. The default is blank "".
+  persistence:
+    enable: true
+    storageClass: ""
+############################################################
 # Superstream Control Plane config
 ############################################################
 superstreamControlPlane:
@@ -49,7 +57,7 @@ superstreamControlPlane:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "1.0.601"
+    tag: "1.0.605"
     registry:
   imagePullSecrets: []
   initContainers:
@@ -74,7 +82,7 @@ superstreamControlPlane:
       # Policy for pulling the image
       pullPolicy: Always
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "1.0.602"
+      tag: "1.0.605"
       registry:
     imagePullSecrets: []
     initContainers:
@@ -97,7 +105,7 @@ superstreamEngine:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "1.0.600"
+    tag: "1.0.603"
     registry:
   imagePullSecrets: []
   # Overrides for Helm's default naming conventions
@@ -202,6 +210,27 @@ superstreamEngine:
     remoteSyslog: superstream-syslog
     port: 5514
     protocol: udp
+  # Optional service to automatically scale the Kafka cluster up/down based on CPU and memory metrics  
+  kafkaAutoScaler:
+    enabled: false
+    image:
+      # Docker image repository for the backend service
+      repository: superstreamlabs/superstream-kafka-auto-scaler
+      # Policy for pulling the image
+      pullPolicy: Always
+      # Overrides the image tag whose default is the chart appVersion.
+      tag: "latest"
+    resources:
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      limits:
+        cpu: '2'
+        memory: 2Gi
+      requests:
+        cpu: '500m'
+        memory: 500Mi
 syslog:
   replicaCount: 1
   image:
