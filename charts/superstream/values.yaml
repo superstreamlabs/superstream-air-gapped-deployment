@@ -57,7 +57,7 @@ superstreamControlPlane:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "1.0.608"
+    tag: "1.0.609"
     registry:
   imagePullSecrets: []
   initContainers:
@@ -197,7 +197,7 @@ superstreamEngine:
     protocol: udp
   # Optional service to automatically scale the Kafka cluster up/down based on CPU and memory metrics  
   kafkaAutoScaler:
-    enabled: false
+    enabled: true
     image:
       # Docker image repository for the backend service
       repository: superstreamlabs/superstream-kafka-auto-scaler
