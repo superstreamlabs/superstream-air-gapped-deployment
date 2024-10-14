@@ -112,6 +112,10 @@ spec:
                   key: ACTIVATION_TOKEN
             - name: ON_PREM
               value: {{ .Values.global.onPrem | quote }}
+            {{- if .Values.global.proxy.enabled }}
+            - name: HTTPS_PROXY
+              value: {{ .Values.global.proxy.proxyUrl }}
+            {{- end }}  
             - name: CONTROL_PLANE_HOST
               value: nats.{{ include "superstream.namespace" . }}
             - name: CONTROL_PLANE_PORT
