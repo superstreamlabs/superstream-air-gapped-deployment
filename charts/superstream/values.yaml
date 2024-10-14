@@ -197,7 +197,7 @@ superstreamEngine:
     protocol: udp
   # Optional service to automatically scale the Kafka cluster up/down based on CPU and memory metrics  
   kafkaAutoScaler:
-    enabled: false
+    enabled: true
     image:
       # Docker image repository for the backend service
       repository: superstreamlabs/superstream-kafka-auto-scaler
