@@ -82,7 +82,7 @@ superstreamControlPlane:
       # Policy for pulling the image
       pullPolicy: Always
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "1.0.606"
+      tag: "1.0.607"
       registry:
     imagePullSecrets: []
     initContainers:
@@ -204,7 +204,7 @@ superstreamEngine:
       # Policy for pulling the image
       pullPolicy: Always
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "latest"
+      tag: "1.0.606"
     resources:
       # We usually recommend not to specify default resources and to leave this as a conscious
       # choice for the user. This also increases chances charts run on environments with little
