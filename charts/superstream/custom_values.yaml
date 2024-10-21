@@ -25,7 +25,7 @@ nats:
     jetstream:
       fileStore:
         pvc:
-          storageClassName: ""
+          storageClassName: ""     
 ############################################################
 # Postgresql config
 ############################################################
@@ -34,9 +34,9 @@ postgresql-ha:
   persistence:
     enable: true    
     storageClass: ""          
+############################################################
 # Kafka Autoscaler config
 ############################################################
 # Optional service to automatically scale the Kafka cluster up/down based on CPU and memory metrics  
-superstreamEngine:
-  kafkaAutoScaler:
-    enabled: false
+autoScaler:
+  enabled: true
