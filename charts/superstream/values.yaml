@@ -195,9 +195,7 @@ superstreamEngine:
     remoteSyslog: superstream-syslog
     port: 5514
     protocol: udp
-  kafkaAutoScaler:
-    image:
-      tag: 1.0.701
+    
 ############################################################
 # Kafka Autoscaler config
 ############################################################
@@ -212,7 +210,7 @@ autoScaler:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "latest"
+    tag: "1.0.701"
   podAnnotations:
     prometheus.io/path: "/monitoring/metrics"
     prometheus.io/scrape: 'true'
