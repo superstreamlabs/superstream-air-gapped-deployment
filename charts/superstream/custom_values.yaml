@@ -39,4 +39,4 @@ postgresql-ha:
 ############################################################
 # Optional service to automatically scale the Kafka cluster up/down based on CPU and memory metrics  
 autoScaler:
-  enabled: false
+  enabled: true

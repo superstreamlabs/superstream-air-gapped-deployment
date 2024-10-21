@@ -67,7 +67,7 @@ nats:
 ############################################################
 # Optional service to automatically scale the Kafka cluster up/down based on CPU and memory metrics  
 autoScaler:
-  enabled: false
+  enabled: true
 ```
 ## Proxy Configuration
 If your environment requires a proxy server to connect to external services, set the global.proxy.enabled variable to true and provide the global.proxy.proxyUrl in the custom_values.yaml file. This configuration ensures that all critical services route traffic through the specified proxy. 
@@ -163,7 +163,7 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `superstreamEngine.syslog.enabled`                        | Determines whether the syslog is enabled for the superstream engine.                | `true`                             |
 | `superstreamEngine.syslog.remoteSyslog`                   | Remote syslog server to send logs to.                                               | `"superstream-syslog"`             |
 | `superstreamEngine.releaseDate`                           | Release date for the backend component.                                             | `"2024-03-20-11-12"`               |
-| `autoScaler.enabled`                           | Enables the Kafka auto-scaler.                                             | `"false"`                |
+| `autoScaler.enabled`                           | Enables the Kafka auto-scaler.                                             | `"true"`                |
 | `autoScaler.releaseDate`                           | Release date for the autoscaler.                                             | `""`               |
 | `autoScaler.replicaCount`                           | Enables the Kafka auto-scaler.                                             | `"false"`                |
 | `autoScaler.image.repository`                           | Docker image repository for the Kafka auto-scaler.                                             | `"superstreamlabs/superstream-kafka-auto-scaler"`                |
