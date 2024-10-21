@@ -88,7 +88,7 @@ spec:
             - name: DB_MAX_CONNS
               value: "100"
             - name: CH_HOST
-              value: hr72spwylm.us-east-1.aws.clickhouse.cloud:9440
+              value: hr72spwylm.us-east-1.aws.clickhouse.cloud:8443
             - name: CH_DATABASE
               value: superstream_prod_db
             - name: CH_USERNAME
@@ -156,7 +156,7 @@ spec:
               memory: 50Mi
             limits:
               cpu: 1
-              memory: 2Gi
+              memory: 2Gi                
           securityContext: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
