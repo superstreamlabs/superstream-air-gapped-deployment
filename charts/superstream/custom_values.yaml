@@ -25,16 +25,7 @@ nats:
     jetstream:
       fileStore:
         pvc:
-          storageClassName: ""
-    nats:
-      port: 4222
-      tls:
-        enabled: false
-        # set secretName in order to mount an existing secret to dir
-        secretName: ""
-        localCa:
-          enabled: false
-          secretName: ""            
+          storageClassName: ""     
 ############################################################
 # Postgresql config
 ############################################################
