@@ -108,6 +108,10 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `global.onPrem`                                           | Specifies if the deployment is for an on-premises environment. | `true` |
 | `nats.config.cluster.enabled`                             | Indicates whether the NATS cluster is enabled.                                      | `true`                             |
 | `nats.config.jetstream.fileStore.pvc.storageClassName`    | Specifies the storage class name for the Jetstream file store PVC.                  | `""`                               |
+| `nats.config.nats.tls.enabled`                             | Enables or disables TLS (Transport Layer Security) for the NATS server. Set to `true` to enable TLS.                                      | `false`                             |
+| `nats.config.nats.tls.secretName`                             | If provided, mounts an existing secret to the directory for TLS credentials. Useful for referencing pre-existing certificates and keys.                                      | `""`                             |
+| `nats.config.nats.tls.localCa.enabled`                             | Enables or disables the use of a local Certificate Authority (CA) for generating TLS certificates.                                      | `false`                             |
+| `nats.config.nats.tls.localCa.secretName`                             | The name of the secret containing the local CA’s certificates. Required if `nats.config.nats.tls.localCa.enabled` is set to `true`.                                      | `false`                             |
 | `superstreamControlPlane.image.registry`                  |	Docker registry to use for pulling the control plane backend service images. | `""` |
 | `superstreamControlPlane.secret.useExisting`              |	Determines whether to use an existing secret for the control plane.	| `true` |
 | `superstreamControlPlane.service.port`                    |	Port for the control plane service.	| `8888` |
