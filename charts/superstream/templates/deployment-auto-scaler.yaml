@@ -25,6 +25,22 @@ spec:
         {{- include "superstream.labels" . | nindent 8 }}
         {{- include "superstream.selectorLabels" . | nindent 8 }}-auto-scaler
     spec:
+      initContainers:
+      - name: check-control-plane-readiness
+        image: {{ .Values.superstreamEngine.initContainers.image }}
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: CP_HOST
+            value: superstream-control-plane.{{ include "superstream.namespace" . }}  
+        command: 
+          - "sh"
+          - "-c"
+          - |
+            until nc -z $CP_HOST.svc.cluster.local 8888 ; do
+              echo waiting for $CP_HOST
+              sleep 2
+            done 
+
       {{- with .Values.global.image.pullSecretNames }}
       imagePullSecrets:
       {{- range . }}
@@ -67,8 +83,27 @@ spec:
               value: {{ .Values.superstreamEngine.syslog.protocol }}
             - name: SYSLOG_PORT
               value: {{ .Values.superstreamEngine.syslog.port | quote }}                           
+            {{- if .Values.autoScaler.extraEnv }}
+            {{- range .Values.autoScaler.extraEnv }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
+            {{- end }}          
           resources:
-            {{- toYaml .Values.autoScaler.resources | nindent 12 }}                                                  
+            {{- toYaml .Values.autoScaler.resources | nindent 12 }} 
+          {{- if .Values.nats.config.nats.tls.localCa.enabled }}
+          volumeMounts:
+            - name: ca-cert-volume
+              mountPath: /etc/ssl/certs/ca-certificates.crt
+              subPath: ca-certificates.crt
+              readOnly: true
+            {{- end }} 
+      {{- if .Values.nats.config.nats.tls.localCa.enabled }}        
+      volumes:
+        - name: ca-cert-volume
+          secret:
+            secretName: {{ .Values.nats.config.nats.tls.localCa.secretName }}
+        {{- end }}                                                               
       {{- with .Values.autoScaler.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
