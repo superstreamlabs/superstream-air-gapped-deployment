@@ -6,11 +6,9 @@
 Reduce Costs and Boost Performance by 75% Without Changing a Single Component or Your Existing Kafka!</b>
 
 </div>
-This guide provides instructions for deploying the Superstream All-In-One distribution.
 
-## Create Secrets with Randomly Generated Passwords for SSM
-### The secret name `superstream-creds-control-plane` cannot be changed in the current release. This will be fixed in an upcoming release.
-To create a secret for the Superstream with randomly generated passwords, run the following command:
+## Create secret with randomly generated passwords for the SSM
+### The secret name cant be changed, will be fixed in coming release.
 ```yaml
 kubectl create secret generic superstream-creds-control-plane \
   --from-literal=postgres-password=$(openssl rand -base64 16 | tr -dc 'a-zA-Z0-9') \
@@ -24,15 +22,16 @@ kubectl create secret generic superstream-creds-control-plane \
   --from-literal=jwt-api-secret-key=$(openssl rand -base64 48 | tr -dc 'a-zA-Z0-9' | head -c32) \
   -n superstream
 ```
-### Note: The following keys should have a length of 32 characters:
+### Note: The following records should be 32 characters long
  - encryption-secret-key
  - jwt-secret-key
  - jwt-api-secret-key
  - control-plane-token
 
+
 ## Configure Environment Tokens
 
-For a more straightforward configuration, create a `custom_values.yaml` file and edit the following values:
+For easiness, create `custom_values.yaml` file and edit the following values:
 ```yaml
 ############################################################
 # GLOBAL configuration for Superstream Engine
@@ -42,7 +41,7 @@ global:
   superstreamAccountId: ""          # Provide the account ID associated with the deployment, which could be used for identifying resources or configurations tied to a specific account.
   superstreamActivationToken: ""    # Enter the activation token required for services or resources that need an initial token for activation or authentication.
   skipLocalAuthentication: true
-  onPrem: true  
+  onPrem: true                      
   ## If your environment uses a proxy server, uncomment the lines below and replace the URL with your proxy server's address.
   proxy:
     enabled: false
@@ -67,30 +66,22 @@ nats:
 ############################################################
 # Optional service to automatically scale the Kafka cluster up/down based on CPU and memory metrics  
 autoScaler:
-  enabled: true
+  enabled: true          
 ```
 ## Proxy Configuration
-If your environment requires a proxy server to connect to external services, set the global.proxy.enabled variable to true and provide the global.proxy.proxyUrl in the custom_values.yaml file. This configuration ensures that all critical services route traffic through the specified proxy. 
-Additionally, make sure your proxy server permits connectivity to the following endpoints:
+
+If your environment requires the use of a proxy server to connect to external services, you need to add the HTTPS_PROXY variable to the Telegraf configuration. This ensures that Telegraf can route its traffic through the specified proxy.
+Additionally, ensure that your proxy server allows connectivity to the following endpoints:
 
 * **Prometheus:** https://prometheus.mgmt.superstream.ai
 * **Loki:** https://loki.mgmt.superstream.ai
-* **Stigg** https://api.stigg.io
 
 ## Deployment Instructions
 
-To deploy the Superstream, run the following command:
+To deploy it, run the following:
 ```bash
-helm repo add superstream-onprem https://k8s-onprem.superstream.ai/ --force-update && helm upgrade --install superstream superstream-onprem/superstream-onprem -f custom_values.yaml --create-namespace --namespace superstream --wait
+helm repo add superstream https://k8s.superstream.ai/ --force-update && helm install superstream superstream/superstream -f custom_values.yaml --create-namespace --namespace superstream --wait
 ```
-
-## Configure valid FQDN records
-To use the Superstream User Interface, the following two FQDN records should be exposed under the same domain.
- - Expose the Superstream Control Plane service. Using superstream-api at the beginning of the configured FQDN is a hard requirement. 
-  Example: "superstream-api.example.com"
- - Expose the Superstream Control Plane UI service. 
-  Example: superstream-app.example.com
- - Log in to the Superstream UI and connect your first Kafka cluster.
 
 ## Parameters
 The following table lists the configurable parameters of the SuperStream chart and their default values:
