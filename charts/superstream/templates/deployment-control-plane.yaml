@@ -129,7 +129,7 @@ spec:
                   name: {{ .Values.superstreamControlPlane.secret.name }}
                   key: control-plane-token
             - name: NATS_HOST
-              value: nats.{{ include "superstream.namespace" . }}.svc
+              value: nats.{{ include "superstream.namespace" . }}
             - name: NATS_PORT
               value: "4222"
             - name: JWT_SECRET_KEY
@@ -150,6 +150,13 @@ spec:
               value: {{ .Values.superstreamEngine.syslog.protocol }}
             - name: SYSLOG_PORT
               value: {{ .Values.superstreamEngine.syslog.port | quote }}
+          {{- if .Values.nats.config.nats.tls.localCa.enabled }}
+          volumeMounts:
+            - name: ca-cert-volume
+              mountPath: /etc/ssl/certs/ca-certificates.crt
+              subPath: ca-certificates.crt
+              readOnly: true
+            {{- end }} 
           resources:
             requests:
               cpu: 50m
@@ -160,6 +167,12 @@ spec:
           securityContext: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
+      {{- if .Values.nats.config.nats.tls.localCa.enabled }}        
+      volumes:
+        - name: ca-cert-volume
+          secret:
+            secretName: {{ .Values.nats.config.nats.tls.localCa.secretName }}
+        {{- end }}            
       dnsPolicy: ClusterFirst
       {{- with .Values.global.image.pullSecretNames }}
       imagePullSecrets:
