@@ -6,9 +6,11 @@
 Reduce Costs and Boost Performance by 75% Without Changing a Single Component or Your Existing Kafka!</b>
 
 </div>
+This guide provides instructions for deploying the Superstream All-In-One distribution.
 
-## Create secret with randomly generated passwords for the SSM
-### The secret name cant be changed, will be fixed in coming release.
+## Create Secrets with Randomly Generated Passwords for SSM
+### The secret name `superstream-creds-control-plane` cannot be changed in the current release. This will be fixed in an upcoming release.
+To create a secret for the Superstream with randomly generated passwords, run the following command:
 ```yaml
 kubectl create secret generic superstream-creds-control-plane \
   --from-literal=postgres-password=$(openssl rand -base64 16 | tr -dc 'a-zA-Z0-9') \
@@ -22,16 +24,15 @@ kubectl create secret generic superstream-creds-control-plane \
   --from-literal=jwt-api-secret-key=$(openssl rand -base64 48 | tr -dc 'a-zA-Z0-9' | head -c32) \
   -n superstream
 ```
-### Note: The following records should be 32 characters long
+### Note: The following keys should have a length of 32 characters:
  - encryption-secret-key
  - jwt-secret-key
  - jwt-api-secret-key
  - control-plane-token
 
-
 ## Configure Environment Tokens
 
-For easiness, create `custom_values.yaml` file and edit the following values:
+For a more straightforward configuration, create a `custom_values.yaml` file and edit the following values:
 ```yaml
 ############################################################
 # GLOBAL configuration for Superstream Engine
@@ -41,7 +42,7 @@ global:
   superstreamAccountId: ""          # Provide the account ID associated with the deployment, which could be used for identifying resources or configurations tied to a specific account.
   superstreamActivationToken: ""    # Enter the activation token required for services or resources that need an initial token for activation or authentication.
   skipLocalAuthentication: true
-  onPrem: true                      
+  onPrem: true  
   ## If your environment uses a proxy server, uncomment the lines below and replace the URL with your proxy server's address.
   proxy:
     enabled: false
@@ -66,22 +67,30 @@ nats:
 ############################################################
 # Optional service to automatically scale the Kafka cluster up/down based on CPU and memory metrics  
 autoScaler:
-  enabled: true          
+  enabled: true
 ```
 ## Proxy Configuration
-
-If your environment requires the use of a proxy server to connect to external services, you need to add the HTTPS_PROXY variable to the Telegraf configuration. This ensures that Telegraf can route its traffic through the specified proxy.
-Additionally, ensure that your proxy server allows connectivity to the following endpoints:
+If your environment requires a proxy server to connect to external services, set the global.proxy.enabled variable to true and provide the global.proxy.proxyUrl in the custom_values.yaml file. This configuration ensures that all critical services route traffic through the specified proxy. 
+Additionally, make sure your proxy server permits connectivity to the following endpoints:
 
 * **Prometheus:** https://prometheus.mgmt.superstream.ai
 * **Loki:** https://loki.mgmt.superstream.ai
+* **Stigg** https://api.stigg.io
 
 ## Deployment Instructions
 
-To deploy it, run the following:
+To deploy the Superstream, run the following command:
 ```bash
-helm repo add superstream https://k8s.superstream.ai/ --force-update && helm install superstream superstream/superstream -f custom_values.yaml --create-namespace --namespace superstream --wait
+helm repo add superstream-onprem https://k8s-onprem.superstream.ai/ --force-update && helm upgrade --install superstream superstream-onprem/superstream-onprem -f custom_values.yaml --create-namespace --namespace superstream --wait
 ```
+
+## Configure valid FQDN records
+To use the Superstream User Interface, the following two FQDN records should be exposed under the same domain.
+ - Expose the Superstream Control Plane service. Using superstream-api at the beginning of the configured FQDN is a hard requirement. 
+  Example: "superstream-api.example.com"
+ - Expose the Superstream Control Plane UI service. 
+  Example: superstream-app.example.com
+ - Log in to the Superstream UI and connect your first Kafka cluster.
 
 ## Parameters
 The following table lists the configurable parameters of the SuperStream chart and their default values:
@@ -106,7 +115,9 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `superstreamControlPlane.image.registry`                  |	Docker registry to use for pulling the control plane backend service images. | `""` |
 | `superstreamControlPlane.secret.useExisting`              |	Determines whether to use an existing secret for the control plane.	| `true` |
 | `superstreamControlPlane.service.port`                    |	Port for the control plane service.	| `8888` |
+| `superstreamControlPlane.extraEnv`                    |	A map of additional environment variables for the application.	| `{}` |
 | `superstreamControlPlane.userInterface.image.registry`    |	Docker registry to use for pulling the control plane UI service images.	| `""` |
+| `superstreamControlPlane.userInterface.extraEnv`                    |	A map of additional environment variables for the application.	| `{}` |
 | `superstreamControlPlane.userInterface.service.port`      |	Port for the control plane UI service. | `80` |
 | `superstreamEngine.releaseDate`                           | Release date for the backend component.                                             | `"2024-02-22-13-03"`               |
 | `superstreamEngine.replicaCount`                          | Number of replicas for the backend deployment.                                      | `2`                                |
@@ -136,6 +147,7 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `superstreamEngine.serviceAccount.create`                 | Specifies whether a service account should be created.                              | `true`                             |
 | `superstreamEngine.serviceAccount.annotations`            | Annotations to add to the service account.                                          | `{}`                               |
 | `superstreamEngine.serviceAccount.name`                   | The name of the service account to use.                                             | `""`                               |
+| `superstreamEngine.extraEnv`                    |	A map of additional environment variables for the application.	| `{}` |
 | `superstreamEngine.service.enabled`                       | Enable service for the backend.                                                     | `true`                             |
 | `superstreamEngine.service.type`                          | Type of service for the backend.                                                    | `ClusterIP`                        |
 | `superstreamEngine.service.port`                          | Port for the backend service.                                                       | `7777`                             |
@@ -173,6 +185,7 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `autoScaler.autoscaling.maxReplicas`               | Maximum number of replicas for autoscaling.                                         | `5`                                |
 | `autoScaler.autoscaling.targetCPUUtilizationPercentage` | CPU utilization percentage for autoscaling.                                         | `75`                               |
 | `autoScaler.autoscaling.targetMemoryUtilizationPercentage` | Memory utilization percentage for autoscaling.                                      | `75`                               |
+| `autoScaler.extraEnv`                    |	A map of additional environment variables for the application.	| `{}` |
 | `autoScaler.nodeSelector`                          | Node selectors to control the placement of pods.                                    | `{}`                               |
 | `autoScaler.tolerations`                           | Tolerations for pods to tolerate certain node conditions or taints.                 | `[]`                               |
 | `autoScaler.affinity`                              | Affinity rules for pod scheduling.                                                  | `{}`                               |
@@ -184,6 +197,7 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `syslog.service.type`                                     | Type of service for syslog.                                                         | `ClusterIP`                        |
 | `syslog.service.port`                                     | Port for the syslog service.                                                        | `5514`                             |
 | `syslog.service.protocol`                                 | Protocol used by the syslog server.                                                    | `UDP`                              |
+| `syslog.extraEnv`                    |	A map of additional environment variables for the application.	| `{}` |
 | `syslog.resources.limits.cpu`                             | CPU limit for the syslog pod.                                                       | `"100m"`                           |
 | `syslog.resources.limits.memory`                          | Memory limit for the syslog pod.                                                    | `"256Mi"`                          |
 | `syslog.resources.requests.cpu`                           | CPU request for the syslog pod.                                                     | `"50m"`                            |

@@ -77,6 +77,10 @@ superstreamControlPlane:
     encryptionSecretKey: ""
     superstreamActivationToken: ""
     useExisting: true
+  extraEnv: {}
+    # Add custom environment variables below
+    # - name: FEATURE_CP_FLAG
+    #   value: "enabled"
   service:
     enabled: true
     type: ClusterIP
@@ -97,6 +101,10 @@ superstreamControlPlane:
     initContainers:
       # Image used for readiness checks or setup tasks before the main containers start
       image: curlimages/curl:8.6.0
+    extraEnv: {}
+      # Add custom environment variables below
+      # - name: FEATURE_CP_UI_FLAG
+      #   value: "enabled"        
     service:
       enabled: true
       type: ClusterIP
@@ -168,6 +176,10 @@ superstreamEngine:
     # The name of the service account to use.
     # If not set and create is true, a name is generated using the fullname template
     name: ""
+  extraEnv: {}
+    # Add custom environment variables below
+    # - name: FEATURE_DP_FLAG
+    #   value: "enabled"    
   service:
     enabled: true
     type: ClusterIP
@@ -234,6 +246,10 @@ autoScaler:
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
+  extraEnv: {}
+    # Add custom environment variables below
+    # - name: FEATURE_AS_FLAG
+    #   value: "enabled"  
   service:
     enabled: true
     type: ClusterIP

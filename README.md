@@ -115,7 +115,9 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `superstreamControlPlane.image.registry`                  |	Docker registry to use for pulling the control plane backend service images. | `""` |
 | `superstreamControlPlane.secret.useExisting`              |	Determines whether to use an existing secret for the control plane.	| `true` |
 | `superstreamControlPlane.service.port`                    |	Port for the control plane service.	| `8888` |
+| `superstreamControlPlane.extraEnv`                    |	A map of additional environment variables for the application.	| `{}` |
 | `superstreamControlPlane.userInterface.image.registry`    |	Docker registry to use for pulling the control plane UI service images.	| `""` |
+| `superstreamControlPlane.userInterface.extraEnv`                    |	A map of additional environment variables for the application.	| `{}` |
 | `superstreamControlPlane.userInterface.service.port`      |	Port for the control plane UI service. | `80` |
 | `superstreamEngine.releaseDate`                           | Release date for the backend component.                                             | `"2024-02-22-13-03"`               |
 | `superstreamEngine.replicaCount`                          | Number of replicas for the backend deployment.                                      | `2`                                |
@@ -145,6 +147,7 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `superstreamEngine.serviceAccount.create`                 | Specifies whether a service account should be created.                              | `true`                             |
 | `superstreamEngine.serviceAccount.annotations`            | Annotations to add to the service account.                                          | `{}`                               |
 | `superstreamEngine.serviceAccount.name`                   | The name of the service account to use.                                             | `""`                               |
+| `superstreamEngine.extraEnv`                    |	A map of additional environment variables for the application.	| `{}` |
 | `superstreamEngine.service.enabled`                       | Enable service for the backend.                                                     | `true`                             |
 | `superstreamEngine.service.type`                          | Type of service for the backend.                                                    | `ClusterIP`                        |
 | `superstreamEngine.service.port`                          | Port for the backend service.                                                       | `7777`                             |
@@ -182,6 +185,7 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `autoScaler.autoscaling.maxReplicas`               | Maximum number of replicas for autoscaling.                                         | `5`                                |
 | `autoScaler.autoscaling.targetCPUUtilizationPercentage` | CPU utilization percentage for autoscaling.                                         | `75`                               |
 | `autoScaler.autoscaling.targetMemoryUtilizationPercentage` | Memory utilization percentage for autoscaling.                                      | `75`                               |
+| `autoScaler.extraEnv`                    |	A map of additional environment variables for the application.	| `{}` |
 | `autoScaler.nodeSelector`                          | Node selectors to control the placement of pods.                                    | `{}`                               |
 | `autoScaler.tolerations`                           | Tolerations for pods to tolerate certain node conditions or taints.                 | `[]`                               |
 | `autoScaler.affinity`                              | Affinity rules for pod scheduling.                                                  | `{}`                               |
@@ -193,6 +197,7 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `syslog.service.type`                                     | Type of service for syslog.                                                         | `ClusterIP`                        |
 | `syslog.service.port`                                     | Port for the syslog service.                                                        | `5514`                             |
 | `syslog.service.protocol`                                 | Protocol used by the syslog server.                                                    | `UDP`                              |
+| `syslog.extraEnv`                    |	A map of additional environment variables for the application.	| `{}` |
 | `syslog.resources.limits.cpu`                             | CPU limit for the syslog pod.                                                       | `"100m"`                           |
 | `syslog.resources.limits.memory`                          | Memory limit for the syslog pod.                                                    | `"256Mi"`                          |
 | `syslog.resources.requests.cpu`                           | CPU request for the syslog pod.                                                     | `"50m"`                            |
