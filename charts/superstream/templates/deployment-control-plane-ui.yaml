@@ -49,6 +49,13 @@ spec:
             - containerPort: {{ .Values.superstreamControlPlane.userInterface.service.port }}
               name: ui
               protocol: TCP
+          {{- if .Values.superstreamControlPlane.userInterface.extraEnv }}
+          {{- range .Values.superstreamControlPlane.userInterface.extraEnv }}              
+          env:
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+          {{- end }}
+          {{- end }}              
           resources:
             requests:
               cpu: 50m
