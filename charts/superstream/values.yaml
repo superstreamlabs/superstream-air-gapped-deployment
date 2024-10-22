@@ -283,6 +283,10 @@ syslog:
     tag: "4.7.1" # Use a specific version to ensure consistency across deployments
     registry:
   imagePullSecrets: []
+  extraEnv: {}
+    # Add custom environment variables below
+    # - name: FEATURE_SYSLOG_FLAG
+    #   value: "enabled"  
   service:
     type: ClusterIP
     port: 5514
