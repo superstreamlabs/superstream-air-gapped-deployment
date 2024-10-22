@@ -45,7 +45,7 @@ nats:
         secretName: ""
         localCa:
           enabled: false
-          secretName: ""            
+          secretName: ""
 ############################################################
 # Postgresql config
 ############################################################
@@ -78,9 +78,9 @@ superstreamControlPlane:
     superstreamActivationToken: ""
     useExisting: true
   extraEnv: {}
-    # Add custom environment variables below
-    # - name: FEATURE_CP_FLAG
-    #   value: "enabled"
+  # Add custom environment variables below
+  # - name: FEATURE_CP_FLAG
+  #   value: "enabled"
   service:
     enabled: true
     type: ClusterIP
@@ -102,9 +102,9 @@ superstreamControlPlane:
       # Image used for readiness checks or setup tasks before the main containers start
       image: curlimages/curl:8.6.0
     extraEnv: {}
-      # Add custom environment variables below
-      # - name: FEATURE_CP_UI_FLAG
-      #   value: "enabled"        
+    # Add custom environment variables below
+    # - name: FEATURE_CP_UI_FLAG
+    #   value: "enabled"        
     service:
       enabled: true
       type: ClusterIP
@@ -177,9 +177,9 @@ superstreamEngine:
     # If not set and create is true, a name is generated using the fullname template
     name: ""
   extraEnv: {}
-    # Add custom environment variables below
-    # - name: FEATURE_DP_FLAG
-    #   value: "enabled"    
+  # Add custom environment variables below
+  # - name: FEATURE_DP_FLAG
+  #   value: "enabled"    
   service:
     enabled: true
     type: ClusterIP
@@ -216,7 +216,6 @@ superstreamEngine:
     remoteSyslog: superstream-syslog
     port: 5514
     protocol: udp
-    
 ############################################################
 # Kafka Autoscaler config
 ############################################################
@@ -247,9 +246,9 @@ autoScaler:
   # runAsNonRoot: true
   # runAsUser: 1000
   extraEnv: {}
-    # Add custom environment variables below
-    # - name: FEATURE_AS_FLAG
-    #   value: "enabled"  
+  # Add custom environment variables below
+  # - name: FEATURE_AS_FLAG
+  #   value: "enabled"  
   service:
     enabled: true
     type: ClusterIP
@@ -284,9 +283,9 @@ syslog:
     registry:
   imagePullSecrets: []
   extraEnv: {}
-    # Add custom environment variables below
-    # - name: FEATURE_SYSLOG_FLAG
-    #   value: "enabled"  
+  # Add custom environment variables below
+  # - name: FEATURE_SYSLOG_FLAG
+  #   value: "enabled"  
   service:
     type: ClusterIP
     port: 5514
