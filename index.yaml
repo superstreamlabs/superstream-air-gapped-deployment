@@ -6,6 +6,39 @@ entries:
       licenses: Memphis Business Source License 1.0
     apiVersion: v2
     appVersion: 1.0.702
+    created: "2024-10-22T14:49:16.369888523Z"
+    dependencies:
+    - name: nats
+      repository: ""
+      version: 1.2.4
+    - name: telegraf
+      repository: ""
+      version: 1.8.48
+    - name: postgresql-ha
+      repository: ""
+      version: 14.2.16
+    description: Superstream Official Helm chart for Air-Gapped environments
+    digest: 0e573a5ff144c54ff27f8e9d85819b01fbef9e108a7a21f16f74ca971a95bdeb
+    home: https://superstream.ai
+    icon: https://memphis-public-files.s3.eu-central-1.amazonaws.com/superstream_logo.png
+    keywords:
+    - data streaming
+    - cost reduction
+    - superstream
+    - kafka
+    maintainers:
+    - name: Superstream Labs
+      url: https://superstream.ai
+    name: superstream-onprem
+    type: application
+    urls:
+    - https://github.com/superstreamlabs/superstream-air-gapped-deployment/releases/download/superstream-onprem-0.1.18/superstream-onprem-0.1.18.tgz
+    version: 0.1.18
+  - annotations:
+      category: Streaming and Messaging
+      licenses: Memphis Business Source License 1.0
+    apiVersion: v2
+    appVersion: 1.0.702
     created: "2024-10-21T12:53:01.028452174Z"
     dependencies:
     - name: nats
@@ -595,4 +628,4 @@ entries:
     urls:
     - https://github.com/superstreamlabs/superstream-air-gapped-deployment/releases/download/superstream-onprem-0.1.0/superstream-onprem-0.1.0.tgz
     version: 0.1.0
-generated: "2024-10-21T12:53:01.028544666Z"
+generated: "2024-10-22T14:49:16.370027843Z"
