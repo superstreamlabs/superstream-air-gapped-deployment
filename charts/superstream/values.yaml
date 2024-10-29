@@ -66,7 +66,7 @@ superstreamControlPlane:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "1.0.702"
+    tag: "1.0.703"
     registry:
   imagePullSecrets: []
   initContainers:
@@ -230,7 +230,7 @@ autoScaler:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "1.0.702"
+    tag: "1.0.703"
   podAnnotations:
     prometheus.io/path: "/monitoring/metrics"
     prometheus.io/scrape: 'true'
