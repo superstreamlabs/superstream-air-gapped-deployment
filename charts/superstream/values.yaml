@@ -194,7 +194,7 @@ superstreamEngine:
       memory: 8Gi
     requests:
       cpu: '50m'
-      memory: 50Mi
+      memory: 128Mi
   # Autoscaling configuration for dynamically adjusting the number of pod replicas
   autoscaling:
     enabled: true
