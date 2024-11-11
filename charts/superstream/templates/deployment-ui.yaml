@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "superstream.fullname" . }}-control-plane-ui
+  name: {{ include "superstream.fullname" . }}-ui
   labels:
     {{- include "superstream.labels" . | nindent 4 }}
 spec:
@@ -41,7 +41,7 @@ spec:
             done 
       nodeSelector: {}
       containers:
-        - name: {{ .Chart.Name }}-control-plane-ui
+        - name: {{ .Chart.Name }}-ui
           {{ include "superstream.image" (merge (pick $.Values "global") .Values.superstreamControlPlane.userInterface.image) | nindent 10 }}
           securityContext:
             {{- toYaml .Values.superstreamEngine.securityContext | nindent 12 }}
