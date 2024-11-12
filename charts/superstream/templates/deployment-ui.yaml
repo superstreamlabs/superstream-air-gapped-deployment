@@ -8,7 +8,7 @@ spec:
   replicas: {{ .Values.superstreamControlPlane.userInterface.replicaCount }}
   selector:
     matchLabels:
-      {{- include "superstream.selectorLabels" . | nindent 6 }}-control-plane-ui
+      {{- include "superstream.selectorLabels" . | nindent 6 }}-ui
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -22,7 +22,7 @@ spec:
       {{- end }}
       labels:
         {{- include "superstream.labels" . | nindent 8 }}
-        {{- include "superstream.selectorLabels" . | nindent 8 }}-control-plane-ui
+        {{- include "superstream.selectorLabels" . | nindent 8 }}-ui
     spec:
       initContainers:
       - name: check-nats-readiness                  # CHANGE TO CP READINESS
