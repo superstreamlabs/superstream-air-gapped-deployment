@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "superstream.fullname" . }}-control-plane-ui
+  name: {{ include "superstream.fullname" . }}-ui
   labels:
     {{- include "superstream.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.superstreamControlPlane.userInterface.replicaCount }}
   selector:
     matchLabels:
-      {{- include "superstream.selectorLabels" . | nindent 6 }}-control-plane-ui
+      {{- include "superstream.selectorLabels" . | nindent 6 }}-ui
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -20,9 +20,9 @@ spec:
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      labels:
+      labels:    
         {{- include "superstream.labels" . | nindent 8 }}
-        {{- include "superstream.selectorLabels" . | nindent 8 }}-control-plane-ui
+        {{- include "superstream.selectorLabels" . | nindent 8 }}-ui
     spec:
       initContainers:
       - name: check-nats-readiness                  # CHANGE TO CP READINESS
@@ -41,7 +41,7 @@ spec:
             done 
       nodeSelector: {}
       containers:
-        - name: {{ .Chart.Name }}-control-plane-ui
+        - name: {{ .Chart.Name }}-ui
           {{ include "superstream.image" (merge (pick $.Values "global") .Values.superstreamControlPlane.userInterface.image) | nindent 10 }}
           securityContext:
             {{- toYaml .Values.superstreamEngine.securityContext | nindent 12 }}

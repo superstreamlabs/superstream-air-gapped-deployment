@@ -66,7 +66,7 @@ superstreamControlPlane:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "1.0.703"
+    tag: "1.0.803"
     registry:
   imagePullSecrets: []
   initContainers:
@@ -91,11 +91,11 @@ superstreamControlPlane:
     replicaCount: 1
     image:
       # Docker image repository for the UI service
-      repository: superstreamlabs/superstream-control-plane-onprem-ui
+      repository: superstreamlabs/superstream-onprem-ui
       # Policy for pulling the image
       pullPolicy: Always
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "1.0.701"
+      tag: "1.0.804"
       registry:
     imagePullSecrets: []
     initContainers:
@@ -108,7 +108,7 @@ superstreamControlPlane:
     service:
       enabled: true
       type: ClusterIP
-      port: 80
+      port: 3000
 ############################################################
 # Superstream Engine config
 ############################################################
@@ -122,7 +122,7 @@ superstreamEngine:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "1.0.700"
+    tag: "1.0.800"
     registry:
   imagePullSecrets: []
   # Overrides for Helm's default naming conventions
@@ -194,7 +194,7 @@ superstreamEngine:
       memory: 8Gi
     requests:
       cpu: '50m'
-      memory: 50Mi
+      memory: 128Mi
   # Autoscaling configuration for dynamically adjusting the number of pod replicas
   autoscaling:
     enabled: true
@@ -230,7 +230,7 @@ autoScaler:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "1.0.703"
+    tag: "1.0.803"
   podAnnotations:
     prometheus.io/path: "/monitoring/metrics"
     prometheus.io/scrape: 'true'
