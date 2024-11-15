@@ -48,14 +48,18 @@ spec:
           ports:
             - containerPort: {{ .Values.superstreamControlPlane.userInterface.service.port }}
               name: ui
-              protocol: TCP
-          {{- if .Values.superstreamControlPlane.userInterface.extraEnv }}
-          {{- range .Values.superstreamControlPlane.userInterface.extraEnv }}              
+              protocol: TCP             
           env:
+          {{- if .Values.global.proxy.enabled }}
+            - name: HTTPS_PROXY
+              value: {{ .Values.global.proxy.proxyUrl }}
+          {{- end }}       
+          {{- if .Values.superstreamControlPlane.userInterface.extraEnv }}
+          {{- range .Values.superstreamControlPlane.userInterface.extraEnv }} 
             - name: {{ .name }}
               value: {{ .value | quote }}
           {{- end }}
-          {{- end }}              
+          {{- end }}        
           resources:
             requests:
               cpu: 50m
