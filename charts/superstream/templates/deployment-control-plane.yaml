@@ -71,7 +71,7 @@ spec:
               protocol: TCP
           env:
             - name: ENV
-              value: production
+              value: {{ .Values.superstreamControlPlane.environment }}
             - name: DB_USER
               value: postgres
             - name: DB_PASS
@@ -88,9 +88,9 @@ spec:
             - name: DB_MAX_CONNS
               value: "100"
             - name: CH_HOST
-              value: hr72spwylm.us-east-1.aws.clickhouse.cloud:{{ if .Values.global.proxy.enabled }}8443{{ else }}9440{{ end }}
+              value: {{ .Values.superstreamControlPlane.clickHouse.host }}:{{ if .Values.global.proxy.enabled }}8443{{ else }}9440{{ end }}
             - name: CH_DATABASE
-              value: superstream_prod_db
+              value: {{ .Values.superstreamControlPlane.clickHouse.dbName }}
             - name: CH_USERNAME
               value: default
             - name: CH_MAX_EXECUTION_TIME
