@@ -77,6 +77,7 @@ superstreamControlPlane:
     encryptionSecretKey: ""
     superstreamActivationToken: ""
     useExisting: true
+  environment: production
   extraEnv: {}
   # Add custom environment variables below
   # - name: FEATURE_CP_FLAG
@@ -88,7 +89,6 @@ superstreamControlPlane:
   clickHouse:
     host: hr72spwylm.us-east-1.aws.clickhouse.cloud
     dbName: superstream_prod_db
-    password: ""
   # Superstream Control Plane UI config
   userInterface:
     # Number of replicas for the control plane UI deployment

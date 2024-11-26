@@ -71,7 +71,7 @@ spec:
               protocol: TCP
           env:
             - name: ENV
-              value: production
+              value: {{ .Values.superstreamEngine.environment }}
             - name: DB_USER
               value: postgres
             - name: DB_PASS
@@ -93,10 +93,6 @@ spec:
               value: {{ .Values.superstreamControlPlane.clickHouse.dbName }}
             - name: CH_USERNAME
               value: default
-            {{- if .Values.superstreamControlPlane.clickHouse.password }}
-            - name: CH_PASSWORD
-              value: {{ .Values.superstreamControlPlane.clickHouse.password | quote }}
-            {{- end }}
             - name: CH_MAX_EXECUTION_TIME
               value: '60'
             - name: CH_DIAL_TIMEOUT
