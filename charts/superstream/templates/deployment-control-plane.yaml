@@ -71,7 +71,7 @@ spec:
               protocol: TCP
           env:
             - name: ENV
-              value: {{ .Values.superstreamEngine.environment }}
+              value: {{ .Values.superstreamControlPlane.environment }}
             - name: DB_USER
               value: postgres
             - name: DB_PASS
