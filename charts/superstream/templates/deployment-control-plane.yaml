@@ -95,7 +95,7 @@ spec:
               value: default
             {{- if .Values.superstreamControlPlane.clickHouse.password }}
             - name: CH_PASSWORD
-              value: {{ .Values.superstreamControlPlane.clickHouse.password }}
+              value: {{ .Values.superstreamControlPlane.clickHouse.password | quote }}
             {{- end }}
             - name: CH_MAX_EXECUTION_TIME
               value: '60'
