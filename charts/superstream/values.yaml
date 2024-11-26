@@ -85,6 +85,10 @@ superstreamControlPlane:
     enabled: true
     type: ClusterIP
     port: 8888
+  clickHouse:
+    host: hr72spwylm.us-east-1.aws.clickhouse.cloud
+    dbName: superstream_prod_db
+    password: ""
   # Superstream Control Plane UI config
   userInterface:
     # Number of replicas for the control plane UI deployment

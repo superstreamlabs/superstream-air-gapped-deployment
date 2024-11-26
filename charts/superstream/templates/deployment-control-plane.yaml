@@ -88,11 +88,15 @@ spec:
             - name: DB_MAX_CONNS
               value: "100"
             - name: CH_HOST
-              value: hr72spwylm.us-east-1.aws.clickhouse.cloud:{{ if .Values.global.proxy.enabled }}8443{{ else }}9440{{ end }}
+              value: {{ .Values.superstreamControlPlane.clickHouse.host }}:{{ if .Values.global.proxy.enabled }}8443{{ else }}9440{{ end }}
             - name: CH_DATABASE
-              value: superstream_prod_db
+              value: {{ .Values.superstreamControlPlane.clickHouse.dbName }}
             - name: CH_USERNAME
               value: default
+            {{- if .Values.superstreamControlPlane.clickHouse.password }}
+            - name: CH_PASSWORD
+              value: {{ .Values.superstreamControlPlane.clickHouse.password }}
+            {{- end }}
             - name: CH_MAX_EXECUTION_TIME
               value: '60'
             - name: CH_DIAL_TIMEOUT
