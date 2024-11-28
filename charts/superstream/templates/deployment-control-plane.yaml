@@ -103,8 +103,10 @@ spec:
               value: '10'
             - name: CH_MAX_OPEN_CONNS
               value: '100'
+            - name: TASKS_LAMBDA_NAME
+              value: 'bi_tasks_staging'
             - name: CH_CONN_MAX_LIFETIME
-              value: '300'
+              value: '300'              
             - name: PORT
               value: "8888"
             - name: ON_PREM
