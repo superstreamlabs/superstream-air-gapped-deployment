@@ -105,6 +105,8 @@ spec:
               value: '100'
             - name: TASKS_LAMBDA_NAME
               value: {{ .Values.superstreamControlPlane.tasksLambdaName | default "bi_tasks_production" | quote }}
+            - name: CLUSTER_PAGE_BI_DATA_LAMBDA_NAME
+              value: {{ .Values.superstreamControlPlane.clusterPageBiDataLambdaName | default "savings_impact_simulator_production" | quote }}
             - name: CH_CONN_MAX_LIFETIME
               value: '300'              
             - name: PORT
