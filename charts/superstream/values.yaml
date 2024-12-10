@@ -79,6 +79,7 @@ superstreamControlPlane:
     useExisting: true
   environment: production
   tasksLambdaName: ""
+  clusterPageBiDataLambdaName: ""
   extraEnv: {}
   # Add custom environment variables below
   # - name: FEATURE_CP_FLAG
