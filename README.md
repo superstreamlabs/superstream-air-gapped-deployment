@@ -42,13 +42,20 @@ global:
   superstreamAccountId: ""          # Provide the account ID associated with the deployment, which could be used for identifying resources or configurations tied to a specific account.
   superstreamActivationToken: ""    # Enter the activation token required for services or resources that need an initial token for activation or authentication.
   skipLocalAuthentication: true
-  onPrem: true  
+  onPrem: true                      
   ## If your environment uses a proxy server, uncomment the lines below and replace the URL with your proxy server's address.
   proxy:
     enabled: false
     proxyUrl: "https://your-proxy-server"
 
 
+############################################################
+# Superstream Control Plane config
+############################################################
+superstreamControlPlane:
+# Configure the time when the samples will be taken (UTC)
+# Default: 7:00 AM
+  utcHourToTakeSamples: ""
 ############################################################
 # NATS config
 ############################################################
@@ -62,6 +69,23 @@ nats:
       fileStore:
         pvc:
           storageClassName: ""
+    nats:
+      port: 4222
+      tls:
+        enabled: false
+        # set secretName in order to mount an existing secret to dir
+        secretName: ""
+        localCa:
+          enabled: false
+          secretName: ""               
+############################################################
+# Postgresql config
+############################################################
+postgresql-ha:
+# Postgresql storageClass configuration. The default is blank "".
+  persistence:
+    enable: true    
+    storageClass: ""          
 ############################################################
 # Kafka Autoscaler config
 ############################################################
@@ -115,6 +139,7 @@ The following table lists the configurable parameters of the SuperStream chart a
 | `superstreamControlPlane.image.registry`                  |	Docker registry to use for pulling the control plane backend service images. | `""` |
 | `superstreamControlPlane.secret.useExisting`              |	Determines whether to use an existing secret for the control plane.	| `true` |
 | `superstreamControlPlane.service.port`                    |	Port for the control plane service.	| `8888` |
+| `utcHourToTakeSamples`                                    |  Configure the time when the samples will be taken (UTC) | `""` |
 | `superstreamControlPlane.extraEnv`                    |	A map of additional environment variables for the application.	| `{}` |
 | `superstreamControlPlane.userInterface.image.registry`    |	Docker registry to use for pulling the control plane UI service images.	| `""` |
 | `superstreamControlPlane.userInterface.extraEnv`                    |	A map of additional environment variables for the application.	| `{}` |
