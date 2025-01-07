@@ -77,6 +77,8 @@ superstreamControlPlane:
     encryptionSecretKey: ""
     superstreamActivationToken: ""
     useExisting: true
+  # Configure the time when the samples will be taken (UTC)
+  utcHourToTakeSamples: ""
   environment: production
   tasksLambdaName: ""
   clusterPageBiDataLambdaName: ""

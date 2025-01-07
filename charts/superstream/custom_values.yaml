@@ -14,6 +14,13 @@ global:
 
 
 ############################################################
+# Superstream Control Plane config
+############################################################
+superstreamControlPlane:
+# Configure the time when the samples will be taken (UTC)
+# Default: 7:00 AM
+  utcHourToTakeSamples: ""
+############################################################
 # NATS config
 ############################################################
 # NATS HA Deployment. Default "true"
