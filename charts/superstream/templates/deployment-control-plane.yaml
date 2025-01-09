@@ -103,10 +103,14 @@ spec:
               value: '10'
             - name: CH_MAX_OPEN_CONNS
               value: '100'
+            - name: CH_CONN_MAX_LIFETIME
+              value: '300'
             - name: TASKS_LAMBDA_NAME
               value: {{ .Values.superstreamControlPlane.tasksLambdaName | default "bi_tasks_production" | quote }}
-            - name: CH_CONN_MAX_LIFETIME
-              value: '300'              
+            - name: CLUSTER_PAGE_BI_DATA_LAMBDA_NAME
+              value: {{ .Values.superstreamControlPlane.clusterPageBiDataLambdaName | default "bi_savings_impact_simulator_production" | quote }}
+            - name: UTC_HOUR_TO_TAKE_SAMPLES
+              value: {{ .Values.superstreamControlPlane.utcHourToTakeSamples | default "7" | quote }}
             - name: PORT
               value: "8888"
             - name: ON_PREM
