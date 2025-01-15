@@ -72,8 +72,6 @@ spec:
           env:
             - name: ENV
               value: {{ .Values.superstreamControlPlane.environment }}
-            - name: AWS_REGION
-              value: us-east-1
             - name: DB_USER
               value: postgres
             - name: DB_PASS
