@@ -82,7 +82,7 @@ superstreamControlPlane:
   environment: production
   tasksLambdaName: ""
   clusterPageBiDataLambdaName: ""
-  extraEnv: {}
+  extraEnv: []
   # Add custom environment variables below
   # - name: FEATURE_CP_FLAG
   #   value: "enabled"
@@ -109,7 +109,7 @@ superstreamControlPlane:
     initContainers:
       # Image used for readiness checks or setup tasks before the main containers start
       image: curlimages/curl:8.6.0
-    extraEnv: {}
+    extraEnv: []
     # Add custom environment variables below
     # - name: FEATURE_CP_UI_FLAG
     #   value: "enabled"        
@@ -184,7 +184,7 @@ superstreamEngine:
     # The name of the service account to use.
     # If not set and create is true, a name is generated using the fullname template
     name: ""
-  extraEnv: {}
+  extraEnv: []
   # Add custom environment variables below
   # - name: FEATURE_DP_FLAG
   #   value: "enabled"    
@@ -253,7 +253,7 @@ autoScaler:
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
-  extraEnv: {}
+  extraEnv: []
   # Add custom environment variables below
   # - name: FEATURE_AS_FLAG
   #   value: "enabled"  
@@ -290,7 +290,7 @@ syslog:
     tag: "4.7.1" # Use a specific version to ensure consistency across deployments
     registry:
   imagePullSecrets: []
-  extraEnv: {}
+  extraEnv: []
   # Add custom environment variables below
   # - name: FEATURE_SYSLOG_FLAG
   #   value: "enabled"  
