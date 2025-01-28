@@ -54,7 +54,7 @@ global:
 ############################################################
 superstreamControlPlane:
 # Configure the time when the samples will be taken (UTC)
-# Default: 7:00 AM
+# Default: "7" (7:00 AM)
   utcHourToTakeSamples: ""
 ############################################################
 # NATS config
