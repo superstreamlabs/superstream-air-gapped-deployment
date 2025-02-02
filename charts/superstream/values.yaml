@@ -66,7 +66,7 @@ superstreamControlPlane:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "1.1.217"
+    tag: "1.1.219"
     registry:
   imagePullSecrets: []
   initContainers:
@@ -103,7 +103,7 @@ superstreamControlPlane:
       # Policy for pulling the image
       pullPolicy: Always
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "1.1.204"
+      tag: "1.1.209"
       registry:
     imagePullSecrets: []
     initContainers:
@@ -130,7 +130,7 @@ superstreamEngine:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "1.1.207"
+    tag: "1.1.209"
     registry:
   imagePullSecrets: []
   # Overrides for Helm's default naming conventions
@@ -238,7 +238,7 @@ autoScaler:
     # Policy for pulling the image
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "1.1.205"
+    tag: "1.1.206"
   podAnnotations:
     prometheus.io/path: "/monitoring/metrics"
     prometheus.io/scrape: 'true'
