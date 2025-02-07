@@ -103,7 +103,7 @@ superstreamControlPlane:
       # Policy for pulling the image
       pullPolicy: Always
       # Overrides the image tag whose default is the chart appVersion.
-      tag: "1.1.301"
+      tag: "1.1.302"
       registry:
     imagePullSecrets: []
     initContainers:
